@@ -11,13 +11,11 @@ import javafx.stage.Stage;
 public class ClientApplication extends Application {
 
     public static void main(String[] args) {
-
         launch(args);
     }
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(
                 ClientApplication.class.getResource("view/Login.fxml"));
