@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.ToolBar?>
+<?import javafx.scene.layout.BorderPane?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.adam.stan.view.ServerStatusWindowController">
+   <center>
+      <TableView fx:id="table" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+        <columns>
+          <TableColumn fx:id="threadName" prefWidth="100.0" text="Thread's name" />
+          <TableColumn fx:id="threadStatus" prefWidth="100.0" text="Status" />
+            <TableColumn fx:id="threadDescription" maxWidth="1.7976931348623157E308" minWidth="-1.0" text="Description" />
+        </columns>
+      </TableView>
+   </center>
+   <top>
+      <ToolBar prefHeight="40.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+        <items>
+          <Button mnemonicParsing="false" onAction="#showDetails" text="Show Details" />
+        </items>
+      </ToolBar>
+   </top>
+</BorderPane>
