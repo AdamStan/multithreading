@@ -25,6 +25,7 @@ public class ClientApplication extends Application {
             primaryStage.setScene(scene);
             primaryStage.setTitle("My cloud");
             primaryStage.show();
+            ApplicationPrimaryStage.INSTANCE.setPrimaryStage(primaryStage);
         } catch (IOException e) {
             e.printStackTrace();
         }

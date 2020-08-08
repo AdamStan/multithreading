@@ -14,11 +14,13 @@ public enum IconProvider {
             new Image(getClass().getResourceAsStream("file_icon.png")));
 
     public Node getFileIcon() {
-        return FILE_ICON;
+        return  new ImageView(
+                new Image(getClass().getResourceAsStream("file_icon.png")));
     }
 
     public Node getFolderIcon() {
-        return FOLDER_ICON;
+        return new ImageView(
+                new Image(getClass().getResourceAsStream("folder_icon.png")));
     }
 
 }

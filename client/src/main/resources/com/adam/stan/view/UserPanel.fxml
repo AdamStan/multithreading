@@ -9,14 +9,14 @@
    <top>
       <ToolBar prefHeight="40.0" prefWidth="200.0" BorderPane.alignment="CENTER">
         <items>
-          <Button mnemonicParsing="false" text="Disconnect" />
-            <Button mnemonicParsing="false" text="Browse..." />
-            <Button mnemonicParsing="false" text="Refresh" />
-            <Button mnemonicParsing="false" text="Settings" />
+          <Button mnemonicParsing="false" onAction="#disconnect" text="Disconnect" />
+            <Button mnemonicParsing="false" onAction="#browse" text="Browse..." />
+            <Button mnemonicParsing="false" onAction="#refresh" text="Refresh" />
+            <Button mnemonicParsing="false" onAction="#settings" text="Settings" />
         </items>
       </ToolBar>
    </top>
    <center>
-      <TreeView prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
+      <TreeView fx:id="treeView" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
    </center>
 </BorderPane>
