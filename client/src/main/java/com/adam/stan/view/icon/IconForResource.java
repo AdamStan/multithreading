@@ -1,7 +1,8 @@
 package com.adam.stan.view.icon;
 
-import com.adam.stan.connection.files.Folder;
-import com.adam.stan.connection.files.Resource;
+
+import com.adam.stan.storage.files.Folder;
+import com.adam.stan.storage.files.Resource;
 
 import javafx.scene.Node;
 

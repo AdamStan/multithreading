@@ -1,4 +1,4 @@
-package com.adam.stan.connection.files;
+package com.adam.stan.storage.files;
 
 
 public interface File extends Resource {

@@ -6,7 +6,7 @@ import java.util.ArrayList;
 public enum MockThreadPool {
     INSTANCE;
     
-    private List<InformationProvider> pool = new ArrayList<>();
+    private List<Informative> pool = new ArrayList<>();
     
     private MockThreadPool() {
         pool.add(new MockThread("thread1", "description1"));
@@ -15,7 +15,7 @@ public enum MockThreadPool {
         pool.add(new MockThread("thread4", "description4"));
     }
     
-    public List<InformationProvider> getThreads() {
+    public List<Informative> getThreads() {
         return pool;
     }
 

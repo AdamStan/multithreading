@@ -2,6 +2,9 @@ package com.adam.stan;
 
 import java.io.IOException;
 
+import com.adam.stan.storage.LocalStorage;
+import com.adam.stan.view.LoginController;
+
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -22,6 +25,9 @@ public class ClientApplication extends Application {
         try {
             GridPane rootLayout = (GridPane) loader.load();
             Scene scene = new Scene(rootLayout);
+            LoginController controller = loader.getController();
+            controller.disableChange();
+            controller.setInitialPath(LocalStorage.initPath);
             primaryStage.setScene(scene);
             primaryStage.setTitle("My cloud");
             primaryStage.show();

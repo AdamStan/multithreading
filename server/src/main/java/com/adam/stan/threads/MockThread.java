@@ -5,7 +5,7 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.beans.value.ObservableValue;
 
-public class MockThread implements InformationProvider {
+public class MockThread implements Informative {
 
     private String threadName;
     private String description;
@@ -17,12 +17,10 @@ public class MockThread implements InformationProvider {
         this.status = ThreadStatus.CREATED;
     }
 
-    @Override
     public String getName() {
         return threadName;
     }
 
-    @Override
     public ThreadStatus getStatus() {
         return status;
     }
@@ -31,7 +29,6 @@ public class MockThread implements InformationProvider {
         this.status = status;
     }
 
-    @Override
     public String getDescription() {
         return description;
     }

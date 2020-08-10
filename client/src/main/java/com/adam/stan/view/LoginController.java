@@ -1,34 +1,48 @@
 package com.adam.stan.view;
 
-import java.util.List;
-
-import com.adam.stan.connection.ConnectException;
-import com.adam.stan.connection.Connector;
-import com.adam.stan.connection.files.Resource;
-
+import javafx.application.Platform;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 
 public class LoginController {
+
     @FXML
     private Label errorLabel;
+
+    @FXML
+    private TextField username;
+
+    @FXML
+    private TextField pathToRootFile;
+
+    @FXML
+    private Button changeLocation;
 
     @FXML
     public void clickExit() {
         System.exit(0);
     }
-    
+
+    public void disableChange() {
+        changeLocation.setDisable(true);
+        pathToRootFile.setEditable(false);
+    }
+
+    public void setInitialPath(String value) {
+        pathToRootFile.setText(value);
+    }
+
     @FXML
     public void clickLogin() {
-        Connector connector = new Connector("localhost");
-        try {
-            connector.connect();
-            List<Resource> items = connector.getUserRootItems();
+        Platform.runLater(() -> {
+//            Connector connector = new Connector("localhost");
+//                connector.connect();
+
+//                List<Resource> items = connector.getUserRootItems();
             PrimaryStageSceneChanger changer = new PrimaryStageSceneChanger();
-            changer.showUserPanel(items);
-        } catch (ConnectException e) {
-            e.getCause().printStackTrace();
-            // show message in login window
-        }
+            changer.showUserPanel(pathToRootFile.getText());
+        });
     }
 }

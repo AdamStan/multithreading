@@ -4,7 +4,8 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import com.adam.stan.connection.files.Resource;
+import com.adam.stan.storage.LocalStorage;
+import com.adam.stan.storage.files.Resource;
 import com.adam.stan.view.icon.IconForResource;
 import com.adam.stan.view.icon.IconProvider;
 
@@ -16,11 +17,18 @@ public class UserPanelController {
 
     private static final Logger LOGGER = Logger
             .getLogger(UserPanelController.class.getName());
+    private LocalStorage root;
 
     @FXML
     private TreeView<String> treeView;
+    
+    public void setLocalStorage(String path) {
+        root = new LocalStorage(path);
+        List<Resource> children = root.listFiles();
+        loadRootItems(children);
+    }
 
-    public void loadRootItems(List<Resource> resources) {
+    public void loadRootItems(List<com.adam.stan.storage.files.Resource> resources) {
         LOGGER.log(Level.INFO, "Tree view: " + treeView);
         if (treeView != null) {
             TreeItem<String> root = new TreeItem<String>("ROOT",

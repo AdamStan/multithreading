@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import com.adam.stan.threads.InformationProvider;
+import com.adam.stan.threads.Informative;
 import com.adam.stan.threads.ThreadStatus;
 
 import javafx.collections.FXCollections;
@@ -17,22 +17,22 @@ public class ServerStatusWindowController {
     private static final Logger LOGGER = Logger.getLogger(ServerStatusWindowController.class.getName());
 
     @FXML
-    private TableView<InformationProvider> table;
+    private TableView<Informative> table;
 
     @FXML
-    private TableColumn<InformationProvider, String> threadName;
+    private TableColumn<Informative, String> threadName;
 
     @FXML
-    private TableColumn<InformationProvider, ThreadStatus> threadStatus;
+    private TableColumn<Informative, ThreadStatus> threadStatus;
 
     @FXML
-    private TableColumn<InformationProvider, String> threadDescription;
+    private TableColumn<Informative, String> threadDescription;
 
-    public void setTableInformation(List<InformationProvider> list) {
+    public void setTableInformation(List<Informative> list) {
         threadName.setCellValueFactory(cellData -> cellData.getValue().getPropertyName());
         threadStatus.setCellValueFactory(cellData -> cellData.getValue().getPropertyStatus());
         threadDescription.setCellValueFactory(cellData -> cellData.getValue().getPropertyDescription());
-        ObservableList<InformationProvider> obsList = FXCollections.observableArrayList(list);
+        ObservableList<Informative> obsList = FXCollections.observableArrayList(list);
         table.setItems(obsList);
     }
     
