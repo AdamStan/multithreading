@@ -10,6 +10,7 @@ import com.adam.stan.view.icon.IconForResource;
 import com.adam.stan.view.icon.IconProvider;
 
 import javafx.fxml.FXML;
+import javafx.scene.control.Label;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
 
@@ -21,6 +22,9 @@ public class UserPanelController {
 
     @FXML
     private TreeView<String> treeView;
+    
+    @FXML
+    private Label taskName;
     
     public void setLocalStorage(String path) {
         root = new LocalStorage(path);
