@@ -58,7 +58,7 @@ public class ServerForClientThread extends Thread {
     }
     
     private ClientServerMessage findCorrectAnswer(ClientServerMessage clientMessage) {
-        return new InfoMessage(clientMessage.getUser(), "This is an answer from server");
+        return ServerOperationSwitch.execute(clientMessage);
     }
 
 }

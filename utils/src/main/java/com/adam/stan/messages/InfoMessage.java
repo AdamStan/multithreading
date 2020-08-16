@@ -25,4 +25,9 @@ public class InfoMessage extends AbstractMessage {
         return "InfoMessage [message=" + message + "]";
     }
 
+    @Override
+    public UseCase getOperationType() {
+        return UseCase.INFO;
+    }
+
 }

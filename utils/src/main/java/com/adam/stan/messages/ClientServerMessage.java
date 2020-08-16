@@ -9,4 +9,5 @@ public interface ClientServerMessage extends Serializable {
 
     Optional<?> getValue();
     User getUser();
+    UseCase getOperationType();
 }

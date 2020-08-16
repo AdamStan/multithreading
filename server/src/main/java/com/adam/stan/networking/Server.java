@@ -2,7 +2,10 @@ package com.adam.stan.networking;
 
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import com.adam.stan.security.ApplicationParameters;
 
 public class Server {
 
@@ -10,7 +13,7 @@ public class Server {
 
     public void handleNewClients() {
         try {
-            ServerSocket server = new ServerSocket(5001);
+            ServerSocket server = new ServerSocket(ApplicationParameters.PORT);
             int counter = 0;
             System.out.println("Server Started ....");
             while (true) {
@@ -18,18 +21,22 @@ public class Server {
                 Socket serverClient = server.accept(); // server accept the
                                                        // client connection
                                                        // request
-                System.out
-                        .println(" >> " + "Client No:" + counter + " started!");
+                logger.info(" >> " + "Client No:" + counter + " started!");
                 ServerForClientThread sct = new ServerForClientThread(
                         serverClient, counter); // send the request to a
                                                 // separate thread
                 sct.start();
             }
         } catch (Exception e) {
-            System.out.println(e);
+            logger.log(Level.WARNING, e.getMessage(), e);
         }
     }
-    
+
+    /**
+     * EXAMPLE of usage with main in Client
+     * 
+     * @param args
+     */
     public static void main(String[] args) {
         new Server().handleNewClients();
     }

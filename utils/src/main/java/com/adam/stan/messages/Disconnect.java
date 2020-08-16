@@ -4,15 +4,13 @@ import java.util.Optional;
 
 import com.adam.stan.security.User;
 
-public class Disconnect implements ClientServerMessage {
+public class Disconnect extends AbstractMessage {
 
     private static final long serialVersionUID = -7418141995955621652L;
     public static final String message = "DISCONNECT";
 
-    private User user;
-
     public Disconnect(User user) {
-        this.user = user;
+        super(user);
     }
 
     @Override
@@ -21,8 +19,8 @@ public class Disconnect implements ClientServerMessage {
     }
 
     @Override
-    public User getUser() {
-        return user;
+    public UseCase getOperationType() {
+        return UseCase.DISCONNECT;
     }
 
 }

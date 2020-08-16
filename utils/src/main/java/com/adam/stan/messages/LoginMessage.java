@@ -4,22 +4,22 @@ import java.util.Optional;
 
 import com.adam.stan.security.User;
 
-public class LoginMessage implements ClientServerMessage {
+public class LoginMessage extends AbstractMessage {
+
     private static final long serialVersionUID = -5664462723868125034L;
-    private User user;
-    
+
     public LoginMessage(User user) {
-        this.user = user;
+        super(user);
     }
 
     @Override
     public Optional<?> getValue() {
-        return Optional.of(user);
+        return Optional.of(getUser());
     }
 
     @Override
-    public User getUser() {
-        return user;
+    public UseCase getOperationType() {
+        return UseCase.LOGIN;
     }
 
 }

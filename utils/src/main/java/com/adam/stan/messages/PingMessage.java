@@ -4,13 +4,12 @@ import java.util.Optional;
 
 import com.adam.stan.security.User;
 
-public class PingMessage implements ClientServerMessage {
+public class PingMessage extends AbstractMessage {
 
     private static final long serialVersionUID = 5897528510679553058L;
-    private User user;
 
     public PingMessage(User user) {
-        this.user = user;
+        super(user);
     }
 
     @Override
@@ -19,8 +18,8 @@ public class PingMessage implements ClientServerMessage {
     }
 
     @Override
-    public User getUser() {
-        return user;
+    public UseCase getOperationType() {
+        return UseCase.PING;
     }
 
 }
