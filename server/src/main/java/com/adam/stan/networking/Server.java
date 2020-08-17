@@ -11,13 +11,15 @@ import com.adam.stan.security.ApplicationParameters;
 public class Server {
 
     static final Logger logger = Logger.getLogger(Server.class.getName());
+    private boolean applicationIsClosing;
+    private ServerSocket server;
 
-    public void handleNewClients() {
+    public void turnOn() {
         try {
-            ServerSocket server = new ServerSocket(ApplicationParameters.PORT);
+            server = new ServerSocket(ApplicationParameters.PORT);
             int counter = 0;
             System.out.println("Server Started ....");
-            while (true) {
+            while (!applicationIsClosing) {
                 counter++;
                 Socket serverClient = server.accept(); // server accept the
                                                        // client connection
@@ -33,13 +35,20 @@ public class Server {
         }
     }
 
+    public void turnOff() throws Exception {
+        applicationIsClosing = true;
+        if (server != null) {
+            server.close();
+        }
+    }
+
     /**
      * EXAMPLE of usage with main in Client
      * 
      * @param args
      */
     public static void main(String[] args) {
-        new Server().handleNewClients();
+        new Server().turnOn();
     }
 
 }

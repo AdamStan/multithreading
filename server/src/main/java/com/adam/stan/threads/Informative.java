@@ -8,4 +8,5 @@ public interface Informative {
     StringProperty getPropertyName();
     ObservableValue<ThreadStatus> getPropertyStatus();
     StringProperty getPropertyDescription();
+    ThreadStatus getStatus();
 }

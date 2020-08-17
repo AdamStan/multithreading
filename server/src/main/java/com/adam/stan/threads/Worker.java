@@ -62,6 +62,7 @@ class Worker extends Thread implements Informative {
         }
     }
 
+    @Override
     public ThreadStatus getStatus() {
         return status;
     }

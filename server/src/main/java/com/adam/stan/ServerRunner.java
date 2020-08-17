@@ -18,6 +18,7 @@ public class ServerRunner extends Application {
     public static final Server GLOBAL_SERVER = new Server();
 
     public static void main(String[] args) {
+        GLOBAL_WORKER_POOL.execute(() -> GLOBAL_SERVER.turnOn());
         launch(args);
     }
 
@@ -33,11 +34,15 @@ public class ServerRunner extends Application {
             primaryStage.setScene(scene);
             primaryStage.setTitle("My cloud - server");
             primaryStage.show();
-            controller
-                    .setTableInformation(GLOBAL_WORKER_POOL.getWorkers());
+            controller.setTableInformation(GLOBAL_WORKER_POOL.getWorkers());
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+    
+    @Override
+    public void stop() throws Exception {
+        GLOBAL_SERVER.turnOff();
     }
 
 }

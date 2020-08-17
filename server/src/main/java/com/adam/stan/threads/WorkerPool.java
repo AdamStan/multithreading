@@ -1,19 +1,20 @@
 package com.adam.stan.threads;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+
 public class WorkerPool {
 
-    private static final int MAX_WORKERS = 4;
+    private static int MAX_WORKERS = 8;
     private static final int INITIAL_QUEUE_SIZE = 32;
     private int counter;
 
     private BlockingQueue<Runnable> queueTasks = new ArrayBlockingQueue<>(
             INITIAL_QUEUE_SIZE);
-    private final List<Worker> workers = new ArrayList<>(MAX_WORKERS);
+    private final ObservableList<Informative> workers = FXCollections.observableArrayList();
 
     /**
      * There should be parameters: which implementation of BlockingQueue and
@@ -25,9 +26,9 @@ public class WorkerPool {
 
     public synchronized void execute(Runnable runnable) {
         // get first not busy worker, or add to queue
-        for (Worker worker : workers) {
+        for (Informative worker : workers) {
             if (worker.getStatus() == ThreadStatus.SLEEPING) {
-                worker.setNextTask(runnable);
+                ((Worker) worker).setNextTask(runnable);
                 return;
             }
         }
@@ -52,7 +53,7 @@ public class WorkerPool {
         return queueTasks.poll();
     }
     
-    public List<Worker> getWorkers() {
+    public ObservableList<Informative> getWorkers() {
         return workers;
     }
 
