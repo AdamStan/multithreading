@@ -23,4 +23,12 @@
         </items>
       </ToolBar>
    </top>
+   <bottom>
+      <TableView prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+        <columns>
+          <TableColumn prefWidth="75.0" text="Username" />
+          <TableColumn prefWidth="75.0" text="Status" />
+        </columns>
+      </TableView>
+   </bottom>
 </BorderPane>

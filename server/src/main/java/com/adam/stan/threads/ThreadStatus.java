@@ -5,5 +5,6 @@ public enum ThreadStatus {
     SLEEPING,
     RUNNING,
     WAITING,
-    CREATED;
+    CREATED,
+    END_OF_LIFE;
 }

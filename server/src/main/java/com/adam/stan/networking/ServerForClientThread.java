@@ -8,7 +8,6 @@ import java.util.logging.Level;
 
 import com.adam.stan.messages.ClientServerMessage;
 import com.adam.stan.messages.Disconnect;
-import com.adam.stan.messages.InfoMessage;
 
 public class ServerForClientThread extends Thread {
 

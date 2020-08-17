@@ -28,7 +28,7 @@ public class ServerStatusWindowController {
     @FXML
     private TableColumn<Informative, String> threadDescription;
 
-    public void setTableInformation(List<Informative> list) {
+    public void setTableInformation(List<? extends Informative> list) {
         threadName.setCellValueFactory(cellData -> cellData.getValue().getPropertyName());
         threadStatus.setCellValueFactory(cellData -> cellData.getValue().getPropertyStatus());
         threadDescription.setCellValueFactory(cellData -> cellData.getValue().getPropertyDescription());

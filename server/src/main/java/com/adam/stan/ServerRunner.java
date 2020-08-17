@@ -2,7 +2,8 @@ package com.adam.stan;
 
 import java.io.IOException;
 
-import com.adam.stan.threads.MockThreadPool;
+import com.adam.stan.networking.Server;
+import com.adam.stan.threads.WorkerPool;
 import com.adam.stan.view.ServerStatusWindowController;
 
 import javafx.application.Application;
@@ -12,6 +13,9 @@ import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
 public class ServerRunner extends Application {
+
+    public static final WorkerPool GLOBAL_WORKER_POOL = new WorkerPool();
+    public static final Server GLOBAL_SERVER = new Server();
 
     public static void main(String[] args) {
         launch(args);
@@ -29,7 +33,8 @@ public class ServerRunner extends Application {
             primaryStage.setScene(scene);
             primaryStage.setTitle("My cloud - server");
             primaryStage.show();
-            controller.setTableInformation(MockThreadPool.INSTANCE.getThreads());
+            controller
+                    .setTableInformation(GLOBAL_WORKER_POOL.getWorkers());
         } catch (IOException e) {
             e.printStackTrace();
         }
