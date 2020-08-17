@@ -9,6 +9,7 @@ public class WorkerPool {
 
     private static final int MAX_WORKERS = 4;
     private static final int INITIAL_QUEUE_SIZE = 32;
+    private int counter;
 
     private BlockingQueue<Runnable> queueTasks = new ArrayBlockingQueue<>(
             INITIAL_QUEUE_SIZE);
@@ -35,7 +36,7 @@ public class WorkerPool {
         // nowego workera
         // jesli max został osiągnięty to dodaj do queue listy
         if(workers.size() < MAX_WORKERS) {
-            Worker newWorker = new Worker(runnable, this, "Worker-" + workers.size());
+            Worker newWorker = new Worker(runnable, this, "Worker-" + counter++);
             workers.add(newWorker);
             newWorker.start();
         } else {

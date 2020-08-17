@@ -5,6 +5,7 @@ import java.net.Socket;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import com.adam.stan.ServerRunner;
 import com.adam.stan.security.ApplicationParameters;
 
 public class Server {
@@ -25,7 +26,7 @@ public class Server {
                 ServerForClientThread sct = new ServerForClientThread(
                         serverClient, counter); // send the request to a
                                                 // separate thread
-                sct.start();
+                ServerRunner.GLOBAL_WORKER_POOL.execute(sct);
             }
         } catch (Exception e) {
             logger.log(Level.WARNING, e.getMessage(), e);

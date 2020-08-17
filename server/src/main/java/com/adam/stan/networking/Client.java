@@ -22,7 +22,8 @@ import com.adam.stan.security.User;
  */
 public class Client {
 
-    public static final Logger logger = Logger.getLogger(Client.class.getName());
+    public static final Logger logger = Logger
+            .getLogger(Client.class.getName());
     private Socket socket;
     private ObjectInputStream inStream;
     private ObjectOutputStream outStream;
@@ -45,7 +46,7 @@ public class Client {
             logger.log(Level.SEVERE, e.getMessage(), e);
         }
     }
-    
+
     public void sendDisconnect() {
         try {
             ClientServerMessage clientMessage = new Disconnect(user);
@@ -56,19 +57,20 @@ public class Client {
             logger.log(Level.SEVERE, e.getMessage(), e);
         }
     }
-    
+
     public void sendInitialMessage() {
         try {
             ClientServerMessage clientMessage = new LoginMessage(user);
             outStream.writeObject(clientMessage);
             outStream.flush();
-            ClientServerMessage serverMessage = (ClientServerMessage) inStream.readObject();
+            ClientServerMessage serverMessage = (ClientServerMessage) inStream
+                    .readObject();
             logger.info(serverMessage.toString());
         } catch (Exception e) {
             logger.log(Level.SEVERE, e.getMessage(), e);
         }
     }
-    
+
     public void sendFile() {
         // TODO: implement
     }
@@ -98,14 +100,15 @@ public class Client {
      * Example of usage with main in Server
      * 
      * @param args
-     * @throws Exception
+     * @throws Exception 
      */
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
         User userExample = new User("adam");
         Client client = new Client(userExample);
         client.init();
         client.sendInitialMessage();
         client.sendInfo("This is client!");
+        Thread.sleep(5_000);
         client.sendDisconnect();
     }
 
