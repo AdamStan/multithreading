@@ -1,5 +1,6 @@
 package com.adam.stan;
 
+import com.adam.stan.connection.Connector;
 import com.adam.stan.view.PrimaryStageSceneChanger;
 
 import javafx.application.Application;
@@ -16,6 +17,11 @@ public class ClientApplication extends Application {
         ApplicationPrimaryStage.INSTANCE.setPrimaryStage(primaryStage);
         PrimaryStageSceneChanger changer = new PrimaryStageSceneChanger();
         changer.showLoginView();
+    }
+
+    @Override
+    public void stop() throws Exception {
+        Connector.disconnect();
     }
 
 }

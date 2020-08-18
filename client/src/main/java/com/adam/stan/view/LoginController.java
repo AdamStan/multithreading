@@ -1,5 +1,7 @@
 package com.adam.stan.view;
 
+import com.adam.stan.connection.Connector;
+
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -37,10 +39,7 @@ public class LoginController {
     @FXML
     public void clickLogin() {
         Platform.runLater(() -> {
-//            Connector connector = new Connector("localhost");
-//                connector.connect();
-
-//                List<Resource> items = connector.getUserRootItems();
+            Connector.connect(username.getText());
             PrimaryStageSceneChanger changer = new PrimaryStageSceneChanger();
             changer.showUserPanel(pathToRootFile.getText());
         });

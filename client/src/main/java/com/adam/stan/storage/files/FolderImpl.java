@@ -1,13 +1,14 @@
 package com.adam.stan.storage.files;
 
-import java.util.Collections;
+import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 
-
 public class FolderImpl implements Folder {
-    private final java.io.File file;
-    
-    FolderImpl(java.io.File file) {
+
+    private final File file;
+
+    FolderImpl(File file) {
         this.file = file;
     }
 
@@ -18,8 +19,13 @@ public class FolderImpl implements Folder {
 
     @Override
     public List<Resource> getChildren() {
-        // TODO Should ls
-        return Collections.emptyList();
+        List<Resource> children = new ArrayList<>();
+        ResourceFactory factory = new ResourceFactory();
+        File[] files = file.listFiles();
+        for (File file : files) {
+            children.add(factory.getResource(file));
+        }
+        return children;
     }
 
     @Override

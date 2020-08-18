@@ -1,28 +1,32 @@
 package com.adam.stan.connection;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import com.adam.stan.storage.files.Resource;
+import com.adam.stan.security.User;
 
 public class Connector {
 
-    private final String url;
-    private static final List<Resource> resources = new ArrayList<>();
+    private static Client client;
 
-    public Connector(String address) {
-        url = address;
+    public static void connect(String username) {
+        User user = new User(username);
+        client = new Client(user);
+        client.init();
+        client.sendInitialMessage();
     }
 
-    public void connect() throws ConnectException {
-        try {
-            // TODO: make connection
-        } catch (Exception e) {
-            throw new ConnectException(e);
+    public static void disconnect() {
+        if (client != null) {
+            client.sendDisconnect();
         }
     }
 
-    public List<Resource> getUserRootItems() {
-        return resources;
+    public static void sendInfo(String message) {
+        client.sendInfo(message);
+    }
+
+    public static void sendFile() {
+        client.sendFile();
+    }
+
+    private Connector() {
     }
 }

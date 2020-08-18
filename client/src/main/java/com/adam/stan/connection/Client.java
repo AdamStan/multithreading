@@ -1,4 +1,4 @@
-package com.adam.stan.networking;
+package com.adam.stan.connection;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -20,7 +20,7 @@ import com.adam.stan.security.User;
  * @author Adam
  *
  */
-public class Client {
+class Client {
 
     public static final Logger logger = Logger
             .getLogger(Client.class.getName());
@@ -29,11 +29,11 @@ public class Client {
     private ObjectOutputStream outStream;
     private User user;
 
-    public Client(User user) {
+    Client(User user) {
         this.user = user;
     }
 
-    public void sendInfo(String message) {
+    void sendInfo(String message) {
         try {
             ClientServerMessage clientMessage = new InfoMessage(user, message);
             ClientServerMessage serverMessage = null;
@@ -47,7 +47,7 @@ public class Client {
         }
     }
 
-    public void sendDisconnect() {
+    void sendDisconnect() {
         try {
             ClientServerMessage clientMessage = new Disconnect(user);
             outStream.writeObject(clientMessage);
@@ -58,7 +58,7 @@ public class Client {
         }
     }
 
-    public void sendInitialMessage() {
+    void sendInitialMessage() {
         try {
             ClientServerMessage clientMessage = new LoginMessage(user);
             outStream.writeObject(clientMessage);
@@ -71,11 +71,11 @@ public class Client {
         }
     }
 
-    public void sendFile() {
+    void sendFile() {
         // TODO: implement
     }
 
-    public void init() {
+    void init() {
         try {
             socket = new Socket(ApplicationParameters.HOSTNAME,
                     ApplicationParameters.PORT);
@@ -86,7 +86,7 @@ public class Client {
         }
     }
 
-    public void close() {
+    void close() {
         try {
             outStream.close();
             outStream.close();
@@ -100,7 +100,7 @@ public class Client {
      * Example of usage with main in Server
      * 
      * @param args
-     * @throws Exception 
+     * @throws Exception
      */
     public static void main(String[] args) throws Exception {
         User userExample = new User("adam");
