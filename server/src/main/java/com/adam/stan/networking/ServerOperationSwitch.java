@@ -1,5 +1,6 @@
 package com.adam.stan.networking;
 
+import com.adam.stan.UsersList;
 import com.adam.stan.messages.ClientServerMessage;
 import com.adam.stan.messages.InfoMessage;
 

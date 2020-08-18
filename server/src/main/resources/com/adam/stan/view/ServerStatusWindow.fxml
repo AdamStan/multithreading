@@ -8,7 +8,7 @@
 
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.adam.stan.view.ServerStatusWindowController">
    <center>
-      <TableView fx:id="table" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+      <TableView fx:id="tableOfThreads" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
         <columns>
           <TableColumn fx:id="threadName" prefWidth="100.0" text="Thread's name" />
           <TableColumn fx:id="threadStatus" prefWidth="100.0" text="Status" />
@@ -23,12 +23,11 @@
         </items>
       </ToolBar>
    </top>
-   <bottom>
-      <TableView prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+   <right>
+      <TableView fx:id="tableOfUsers" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
         <columns>
-          <TableColumn prefWidth="75.0" text="Username" />
-          <TableColumn prefWidth="75.0" text="Status" />
+          <TableColumn fx:id="usernameColumn" prefWidth="75.0" text="Username" />
         </columns>
       </TableView>
-   </bottom>
+   </right>
 </BorderPane>

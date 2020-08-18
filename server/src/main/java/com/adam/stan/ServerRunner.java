@@ -35,11 +35,12 @@ public class ServerRunner extends Application {
             primaryStage.setTitle("My cloud - server");
             primaryStage.show();
             controller.setTableInformation(GLOBAL_WORKER_POOL.getWorkers());
+            controller.setUsersTable(UsersList.INSTANCE.getUsers());
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
-    
+
     @Override
     public void stop() throws Exception {
         GLOBAL_SERVER.turnOff();

@@ -1,16 +1,17 @@
-package com.adam.stan.networking;
+package com.adam.stan;
 
-import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.List;
 
 import com.adam.stan.security.User;
+
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
 public enum UsersList {
 
     INSTANCE;
 
-    private static final List<User> users = new ArrayList<>();
+    private static final ObservableList<User> users = FXCollections.observableArrayList();
 
     public void addUser(User user) {
         synchronized (users) {
@@ -34,5 +35,9 @@ public enum UsersList {
         synchronized (users) {
             users.remove(user);
         }
+    }
+
+    ObservableList<User> getUsers() {
+        return users;
     }
 }

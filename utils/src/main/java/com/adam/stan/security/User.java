@@ -2,6 +2,9 @@ package com.adam.stan.security;
 
 import java.io.Serializable;
 
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
+
 public class User implements Serializable {
 
     private static final long serialVersionUID = 4207980104960853353L;
@@ -18,6 +21,10 @@ public class User implements Serializable {
     @Override
     public String toString() {
         return "User [" + name + "]";
+    }
+
+    public StringProperty getNameProperty() {
+        return new SimpleStringProperty(name);
     }
 
 }
