@@ -95,6 +95,10 @@ class Client {
             logger.log(Level.SEVERE, e.getMessage(), e);
         }
     }
+    
+    boolean isConnected() {
+        return inStream != null && outStream != null;
+    }
 
     /**
      * Example of usage with main in Server

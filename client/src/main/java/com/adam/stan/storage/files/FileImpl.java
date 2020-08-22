@@ -7,6 +7,7 @@ import java.util.List;
 public class FileImpl implements File {
     
     private final java.io.File file;
+    private String relativePath;
     
     public FileImpl(java.io.File file) {
         this.file = file;

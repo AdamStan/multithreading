@@ -14,7 +14,7 @@ public class Connector {
     }
 
     public static void disconnect() {
-        if (client != null) {
+        if (client != null && client.isConnected()) {
             client.sendDisconnect();
         }
     }

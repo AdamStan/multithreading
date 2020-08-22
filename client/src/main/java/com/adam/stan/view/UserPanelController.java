@@ -1,38 +1,51 @@
 package com.adam.stan.view;
 
+import java.nio.file.WatchEvent;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import com.adam.stan.storage.LocalStorage;
+import com.adam.stan.storage.RootLocalDirectory;
 import com.adam.stan.storage.files.Resource;
+import com.adam.stan.storage.threads.ChangeInRootListener;
 import com.adam.stan.view.icon.IconForResource;
 import com.adam.stan.view.icon.IconProvider;
 
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
 
-public class UserPanelController {
+public class UserPanelController implements ChangeInRootListener {
 
     private static final Logger LOGGER = Logger
             .getLogger(UserPanelController.class.getName());
-    private LocalStorage root;
+    private RootLocalDirectory root;
 
     @FXML
     private TreeView<String> treeView;
-    
+
     @FXML
     private Label taskName;
-    
+
     public void setLocalStorage(String path) {
-        root = new LocalStorage(path);
+        root = new RootLocalDirectory(path);
+        refreshItems();
+        root.watch();
+        root.addFileChangedListener(this);
+    }
+
+    /**
+     * Run on JavaFX thread
+     */
+    private void refreshItems() {
         List<Resource> children = root.listFiles();
         loadRootItems(children);
     }
 
-    public void loadRootItems(List<com.adam.stan.storage.files.Resource> resources) {
+    public void loadRootItems(
+            List<com.adam.stan.storage.files.Resource> resources) {
         LOGGER.log(Level.INFO, "Tree view: " + treeView);
         if (treeView != null) {
             TreeItem<String> root = new TreeItem<String>("ROOT",
@@ -70,5 +83,10 @@ public class UserPanelController {
     @FXML
     public void settings() {
         LOGGER.log(Level.INFO, "settings");
+    }
+
+    @Override
+    public void directoryChanged(WatchEvent<?> key) {
+        Platform.runLater(() -> this.refreshItems());
     }
 }

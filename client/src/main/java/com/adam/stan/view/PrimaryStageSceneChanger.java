@@ -4,7 +4,7 @@ import java.io.IOException;
 
 import com.adam.stan.ApplicationPrimaryStage;
 import com.adam.stan.ClientApplication;
-import com.adam.stan.storage.LocalStorage;
+import com.adam.stan.storage.RootLocalDirectory;
 
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -42,7 +42,7 @@ public class PrimaryStageSceneChanger {
             Scene scene = new Scene(rootLayout);
             LoginController controller = loader.getController();
             controller.disableChange();
-            controller.setInitialPath(LocalStorage.initPath);
+            controller.setInitialPath(RootLocalDirectory.initPath);
             Stage primaryStage = ApplicationPrimaryStage.INSTANCE
                     .getPrimaryStage();
             primaryStage.setScene(scene);
