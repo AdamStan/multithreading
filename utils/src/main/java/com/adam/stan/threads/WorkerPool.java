@@ -14,7 +14,8 @@ public class WorkerPool {
 
     private BlockingQueue<Runnable> queueTasks = new ArrayBlockingQueue<>(
             INITIAL_QUEUE_SIZE);
-    private final ObservableList<Informative> workers = FXCollections.observableArrayList();
+    private final ObservableList<Informative> workers = FXCollections
+            .observableArrayList();
 
     /**
      * There should be parameters: which implementation of BlockingQueue and
@@ -36,8 +37,9 @@ public class WorkerPool {
         // jesli wszystkie zajete i max workerów nie został osiągniety to dodaj
         // nowego workera
         // jesli max został osiągnięty to dodaj do queue listy
-        if(workers.size() < MAX_WORKERS) {
-            Worker newWorker = new Worker(runnable, this, "Worker-" + counter++);
+        if (workers.size() < MAX_WORKERS) {
+            Worker newWorker = new Worker(runnable, this,
+                    "Worker-" + counter++);
             workers.add(newWorker);
             newWorker.start();
         } else {
@@ -45,16 +47,24 @@ public class WorkerPool {
         }
     }
 
-    synchronized void endWorker(Worker worker) {
+    synchronized void endWorker(Informative worker) {
         workers.remove(worker);
     }
 
     synchronized Runnable taskFromQueue() {
         return queueTasks.poll();
     }
-    
+
     public ObservableList<Informative> getWorkers() {
         return workers;
+    }
+
+    public void interruptAll() {
+        queueTasks.clear();
+        workers.forEach(work -> {
+            this.endWorker(work);
+            ((Worker) work).interrupt();
+        });
     }
 
 }

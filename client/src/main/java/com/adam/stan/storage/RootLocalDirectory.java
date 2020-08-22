@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import com.adam.stan.ClientApplication;
 import com.adam.stan.storage.files.Resource;
 import com.adam.stan.storage.files.ResourceFactory;
 import com.adam.stan.storage.threads.ChangeInRootListener;
@@ -54,7 +55,7 @@ public class RootLocalDirectory {
     public void watch() {
         Path rootPath = root.toPath();
         directoryWatcher = new WatchDirectoryThread(rootPath);
-        directoryWatcher.start();
+        ClientApplication.GLOBAL_WORKER_POOL.execute(directoryWatcher);
     }
 
     public void addFileChangedListener(ChangeInRootListener listener) {

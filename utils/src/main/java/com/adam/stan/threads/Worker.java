@@ -35,7 +35,6 @@ class Worker extends Thread implements Informative {
 
     @Override
     public void run() {
-        // TODO Auto-generated method stub
         // wez aktualnego taska
         // zrob go
         // pobierz nastepnego taska z queue listy working poola

@@ -44,6 +44,7 @@ public class ServerRunner extends Application {
     @Override
     public void stop() throws Exception {
         GLOBAL_SERVER.turnOff();
+        GLOBAL_WORKER_POOL.interruptAll();
     }
 
 }
