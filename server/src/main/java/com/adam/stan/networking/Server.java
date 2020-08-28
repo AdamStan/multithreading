@@ -18,16 +18,15 @@ public class Server {
         try {
             server = new ServerSocket(ApplicationParameters.PORT);
             int counter = 0;
-            System.out.println("Server Started ....");
+            logger.info("Server Started ....");
             while (!applicationIsClosing) {
                 counter++;
                 Socket serverClient = server.accept(); // server accept the
                                                        // client connection
                                                        // request
                 logger.info(" >> " + "Client No:" + counter + " started!");
-                ServerForClientThread sct = new ServerForClientThread(
-                        serverClient, counter); // send the request to a
-                                                // separate thread
+                ServerForClientThread sct = new ServerForClientThread(serverClient, counter); // send the request to a
+                                                                                              // separate thread
                 ServerRunner.GLOBAL_WORKER_POOL.execute(sct);
             }
         } catch (Exception e) {

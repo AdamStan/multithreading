@@ -1,4 +1,4 @@
-package com.adam.stan.storage.files;
+package com.adam.stan.files;
 
 public class ResourceFactory {
 

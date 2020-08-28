@@ -4,11 +4,14 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import com.adam.stan.files.Resource;
 import com.adam.stan.messages.ClientServerMessage;
 import com.adam.stan.messages.Disconnect;
+import com.adam.stan.messages.FileMessage;
 import com.adam.stan.messages.InfoMessage;
 import com.adam.stan.messages.LoginMessage;
 import com.adam.stan.security.ApplicationParameters;
@@ -71,8 +74,18 @@ class Client {
         }
     }
 
-    void sendFile() {
-        // TODO: implement
+    void sendFile(List<Resource> resources) {
+        try {
+            ClientServerMessage clientMessage = new FileMessage(user, resources);
+            System.out.println(clientMessage);
+            outStream.writeObject(clientMessage);
+            outStream.flush();
+//            ClientServerMessage serverMessage = (ClientServerMessage) inStream
+//                    .readObject();
+//            logger.info(serverMessage.toString());
+        } catch (Exception e) {
+            logger.log(Level.SEVERE, e.getMessage(), e);
+        }
     }
 
     void init() {

@@ -31,7 +31,9 @@ public class ServerForClientThread extends Thread {
             ClientServerMessage clientMessage;
             ClientServerMessage serverMessage;
             do {
-                clientMessage = (ClientServerMessage) inStream.readObject();
+                Object object = inStream.readObject();
+                System.out.println(object);
+                clientMessage = (ClientServerMessage) object;
                 Server.logger.log(Level.INFO, "From client: " + clientID + ", message is: " + clientMessage);
                 serverMessage = findCorrectAnswer(clientMessage);
                 outStream.writeObject(serverMessage);
@@ -42,11 +44,9 @@ public class ServerForClientThread extends Thread {
             outStream.close();
             serverClient.close();
         } catch (IOException e) {
-            Server.logger.log(Level.WARNING, e.getMessage());
-            Server.logger.log(Level.FINEST, e.getMessage(), e);
+            e.printStackTrace();
         } catch (ClassNotFoundException e) {
-            Server.logger.log(Level.FINEST, e.getMessage(), e);
-            Server.logger.log(Level.WARNING, e.getMessage());
+            e.printStackTrace();
         }
     }
 

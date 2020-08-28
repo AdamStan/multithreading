@@ -1,4 +1,4 @@
-package com.adam.stan.storage.files;
+package com.adam.stan.files;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -6,6 +6,7 @@ import java.util.List;
 
 public class FolderImpl implements Folder {
 
+    private static final long serialVersionUID = -2182150057701144582L;
     private final File file;
 
     FolderImpl(File file) {
@@ -36,6 +37,11 @@ public class FolderImpl implements Folder {
     @Override
     public void addChildren(Resource child) {
         // TODO Should add to children new resource
+    }
+
+    @Override
+    public String toString() {
+        return "FolderImpl [file=" + file.getAbsolutePath() + "]";
     }
 
 }

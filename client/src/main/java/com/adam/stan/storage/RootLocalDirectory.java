@@ -7,16 +7,15 @@ import java.util.Collections;
 import java.util.List;
 
 import com.adam.stan.ClientApplication;
-import com.adam.stan.storage.files.Resource;
-import com.adam.stan.storage.files.ResourceFactory;
+import com.adam.stan.files.Resource;
+import com.adam.stan.files.ResourceFactory;
 import com.adam.stan.storage.threads.ChangeInRootListener;
 import com.adam.stan.storage.threads.WatchDirectoryThread;
 
 public class RootLocalDirectory {
 
     public static final String ourDirectoryName = "my-cloud";
-    public static final String initPath = System.getProperty("user.home")
-            + File.separatorChar + ourDirectoryName;
+    public static final String initPath = System.getProperty("user.home") + File.separatorChar + ourDirectoryName;
 
     private final String path;
     private File root;
@@ -33,10 +32,10 @@ public class RootLocalDirectory {
     }
 
     public String getRelativePath(String absolutePath) {
-        return absolutePath.substring(ourDirectoryName.length());
+        return absolutePath.substring(path.length());
     }
 
-    public List<Resource> listFiles() {
+    public synchronized List<Resource> listFiles() {
         children = new ArrayList<>();
         if (!root.exists()) {
             root.mkdir();
@@ -49,6 +48,10 @@ public class RootLocalDirectory {
             children.add(factory.getResource(file));
         }
 
+        return children;
+    }
+
+    public List<Resource> getChildren() {
         return children;
     }
 

@@ -5,8 +5,9 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import com.adam.stan.files.Resource;
 import com.adam.stan.storage.RootLocalDirectory;
-import com.adam.stan.storage.files.Resource;
+import com.adam.stan.storage.SendFileToServerListener;
 import com.adam.stan.storage.threads.ChangeInRootListener;
 import com.adam.stan.view.icon.IconForResource;
 import com.adam.stan.view.icon.IconProvider;
@@ -34,6 +35,7 @@ public class UserPanelController implements ChangeInRootListener {
         refreshItems();
         root.watch();
         root.addFileChangedListener(this);
+        root.addFileChangedListener(new SendFileToServerListener(root));
     }
 
     /**
@@ -45,7 +47,7 @@ public class UserPanelController implements ChangeInRootListener {
     }
 
     public void loadRootItems(
-            List<com.adam.stan.storage.files.Resource> resources) {
+            List<com.adam.stan.files.Resource> resources) {
         LOGGER.log(Level.INFO, "Tree view: " + treeView);
         if (treeView != null) {
             TreeItem<String> root = new TreeItem<String>("ROOT",

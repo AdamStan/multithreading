@@ -7,5 +7,6 @@ public enum UseCase {
     PING,
     FILE_DOWNLOAD,
     FILE_REMOVE,
-    DISCONNECT;
+    DISCONNECT, 
+    FILE_REFRESH;
 }

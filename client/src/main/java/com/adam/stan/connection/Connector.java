@@ -1,5 +1,8 @@
 package com.adam.stan.connection;
 
+import java.util.List;
+
+import com.adam.stan.files.Resource;
 import com.adam.stan.security.User;
 
 public class Connector {
@@ -9,22 +12,30 @@ public class Connector {
     public static void connect(String username) {
         User user = new User(username);
         client = new Client(user);
-        client.init();
-        client.sendInitialMessage();
+        synchronized (client) {
+            client.init();
+            client.sendInitialMessage();
+        }
     }
 
     public static void disconnect() {
         if (client != null && client.isConnected()) {
-            client.sendDisconnect();
+            synchronized (client) {
+                client.sendDisconnect();
+            }
         }
     }
 
     public static void sendInfo(String message) {
-        client.sendInfo(message);
+        synchronized (client) {
+            client.sendInfo(message);
+        }
     }
 
-    public static void sendFile() {
-        client.sendFile();
+    public static void sendFile(List<Resource> resources) {
+        synchronized (client) {
+            client.sendFile(resources);
+        }
     }
 
     private Connector() {
