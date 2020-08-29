@@ -32,9 +32,9 @@ public class Connector {
         }
     }
 
-    public static void sendFile(List<Resource> resources) {
+    public static void sendFiles(List<Resource> resources) {
         synchronized (client) {
-            client.sendFile(resources);
+            client.sendFiles(resources);
         }
     }
 

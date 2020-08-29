@@ -8,12 +8,6 @@ public class FileImpl extends ResourceImpl implements File {
         super(file, rootPath);
     }
 
-
-    @Override
-    public void download() {
-        // TODO: create something
-    }
-
     @Override
     public String toString() {
         return "FileImpl [file=" + file.getAbsolutePath() + "]";

@@ -7,6 +7,5 @@ public interface Resource extends Serializable {
 
     String getName();
     List<Resource> getChildren();
-    void download();
     String relativePath();
 }

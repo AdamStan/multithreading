@@ -14,7 +14,7 @@
         <items>
           <Button mnemonicParsing="false" onAction="#disconnect" text="Disconnect" />
             <Button mnemonicParsing="false" onAction="#browse" text="Browse..." />
-            <Button mnemonicParsing="false" onAction="#refresh" text="Refresh" />
+            <Button mnemonicParsing="false" onAction="#upload" text="Upload" />
             <Button mnemonicParsing="false" onAction="#settings" text="Settings" />
         </items>
       </ToolBar>

@@ -74,7 +74,7 @@ class Client {
         }
     }
 
-    void sendFile(List<Resource> resources) {
+    void sendFiles(List<Resource> resources) {
         try {
             ClientServerMessage clientMessage = new FileMessage(user, resources);
             System.out.println(clientMessage);

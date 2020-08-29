@@ -24,11 +24,6 @@ public class FolderImpl extends ResourceImpl implements Folder {
     }
 
     @Override
-    public void download() {
-        // TODO Auto-generated method stub
-    }
-
-    @Override
     public void addChildren(Resource child) {
         // TODO Should add to children new resource
     }

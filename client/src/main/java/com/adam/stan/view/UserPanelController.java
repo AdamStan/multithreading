@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import com.adam.stan.connection.Connector;
 import com.adam.stan.files.Resource;
 import com.adam.stan.storage.RootLocalDirectory;
 import com.adam.stan.storage.SendFileToServerListener;
@@ -78,8 +79,11 @@ public class UserPanelController implements ChangeInRootListener {
     }
 
     @FXML
-    public void refresh() {
-        LOGGER.log(Level.INFO, "Refresh");
+    public void upload() {
+        LOGGER.log(Level.INFO, "Upload files - just for testing - to remove");
+        // force upload for all files
+        List<Resource> children = root.listFiles();
+        Connector.sendFiles(children);
     }
 
     @FXML
