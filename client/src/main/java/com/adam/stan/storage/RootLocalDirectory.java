@@ -31,17 +31,13 @@ public class RootLocalDirectory {
         return path;
     }
 
-    public String getRelativePath(String absolutePath) {
-        return absolutePath.substring(path.length());
-    }
-
     public synchronized List<Resource> listFiles() {
         children = new ArrayList<>();
         if (!root.exists()) {
             root.mkdir();
         }
 
-        ResourceFactory factory = new ResourceFactory();
+        ResourceFactory factory = new ResourceFactory(getPath());
         File[] files = root.listFiles();
 
         for (File file : files) {

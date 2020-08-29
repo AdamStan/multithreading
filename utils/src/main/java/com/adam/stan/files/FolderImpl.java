@@ -4,24 +4,18 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FolderImpl implements Folder {
+public class FolderImpl extends ResourceImpl implements Folder {
 
     private static final long serialVersionUID = -2182150057701144582L;
-    private final File file;
 
-    FolderImpl(File file) {
-        this.file = file;
-    }
-
-    @Override
-    public String getName() {
-        return file.getName();
+    FolderImpl(File file, String rootPath) {
+        super(file, rootPath);
     }
 
     @Override
     public List<Resource> getChildren() {
         List<Resource> children = new ArrayList<>();
-        ResourceFactory factory = new ResourceFactory();
+        ResourceFactory factory = new ResourceFactory(rootPath);
         File[] files = file.listFiles();
         for (File file : files) {
             children.add(factory.getResource(file));
