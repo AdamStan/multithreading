@@ -44,9 +44,9 @@ public class ServerForClientThread extends Thread {
             outStream.close();
             serverClient.close();
         } catch (IOException e) {
-            e.printStackTrace();
+            Server.logger.log(Level.INFO, e.getMessage(), e);
         } catch (ClassNotFoundException e) {
-            e.printStackTrace();
+            Server.logger.log(Level.INFO, e.getMessage(), e);
         }
     }
 
