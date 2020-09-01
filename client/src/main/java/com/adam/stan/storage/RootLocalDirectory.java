@@ -8,7 +8,7 @@ import java.util.List;
 
 import com.adam.stan.ClientApplication;
 import com.adam.stan.files.Resource;
-import com.adam.stan.files.ResourceFactory;
+import com.adam.stan.storage.files.ResourceFactory;
 import com.adam.stan.storage.threads.ChangeInRootListener;
 import com.adam.stan.storage.threads.WatchDirectoryThread;
 

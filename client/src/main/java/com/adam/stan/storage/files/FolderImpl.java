@@ -1,8 +1,10 @@
-package com.adam.stan.files;
+package com.adam.stan.storage.files;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+
+import com.adam.stan.files.Resource;
 
 public class FolderImpl extends ResourceImpl implements Folder {
 

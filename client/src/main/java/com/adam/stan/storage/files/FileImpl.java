@@ -1,4 +1,4 @@
-package com.adam.stan.files;
+package com.adam.stan.storage.files;
 
 public class FileImpl extends ResourceImpl implements MyFile {
 

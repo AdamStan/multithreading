@@ -8,6 +8,8 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
+import com.adam.stan.storage.files.FileImpl;
+
 public class ResourceImplTests {
 
     private static final String fileName = "file.xml";

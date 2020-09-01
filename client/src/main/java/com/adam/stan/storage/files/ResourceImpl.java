@@ -1,9 +1,11 @@
-package com.adam.stan.files;
+package com.adam.stan.storage.files;
 
 import java.io.IOException;
 import java.nio.file.Files;
 import java.util.Collections;
 import java.util.List;
+
+import com.adam.stan.files.Resource;
 
 public abstract class ResourceImpl implements Resource {
 

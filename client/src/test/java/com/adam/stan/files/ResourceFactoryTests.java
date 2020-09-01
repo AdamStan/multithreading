@@ -7,6 +7,10 @@ import static org.mockito.Mockito.when;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
+import com.adam.stan.storage.files.Folder;
+import com.adam.stan.storage.files.MyFile;
+import com.adam.stan.storage.files.ResourceFactory;
+
 public class ResourceFactoryTests {
 
     private static java.io.File file;
