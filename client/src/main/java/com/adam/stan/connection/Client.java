@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+import java.nio.file.Files;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -25,8 +26,7 @@ import com.adam.stan.security.User;
  */
 class Client {
 
-    public static final Logger logger = Logger
-            .getLogger(Client.class.getName());
+    public static final Logger logger = Logger.getLogger(Client.class.getName());
     private Socket socket;
     private ObjectInputStream inStream;
     private ObjectOutputStream outStream;
@@ -66,8 +66,7 @@ class Client {
             ClientServerMessage clientMessage = new LoginMessage(user);
             outStream.writeObject(clientMessage);
             outStream.flush();
-            ClientServerMessage serverMessage = (ClientServerMessage) inStream
-                    .readObject();
+            ClientServerMessage serverMessage = (ClientServerMessage) inStream.readObject();
             logger.info(serverMessage.toString());
         } catch (Exception e) {
             logger.log(Level.SEVERE, e.getMessage(), e);
@@ -76,12 +75,20 @@ class Client {
 
     void sendFiles(List<Resource> resources) {
         try {
-            ClientServerMessage clientMessage = new FileMessage(user, resources);
+            resources.forEach(res -> sendFile(res));
+        } catch (Exception e) {
+            logger.log(Level.SEVERE, e.getMessage(), e);
+        }
+    }
+
+    synchronized void sendFile(Resource resource) {
+        try {
+            byte[] content = resource.getContent();
+            ClientServerMessage clientMessage = new FileMessage(user, resource, content);
             System.out.println(clientMessage);
             outStream.writeObject(clientMessage);
             outStream.flush();
-//            ClientServerMessage serverMessage = (ClientServerMessage) inStream
-//                    .readObject();
+//            ClientServerMessage serverMessage = (ClientServerMessage) inStream.readObject();
 //            logger.info(serverMessage.toString());
         } catch (Exception e) {
             logger.log(Level.SEVERE, e.getMessage(), e);
@@ -90,8 +97,7 @@ class Client {
 
     void init() {
         try {
-            socket = new Socket(ApplicationParameters.HOSTNAME,
-                    ApplicationParameters.PORT);
+            socket = new Socket(ApplicationParameters.HOSTNAME, ApplicationParameters.PORT);
             inStream = new ObjectInputStream(socket.getInputStream());
             outStream = new ObjectOutputStream(socket.getOutputStream());
         } catch (IOException e) {
@@ -108,7 +114,7 @@ class Client {
             logger.log(Level.SEVERE, e.getMessage(), e);
         }
     }
-    
+
     boolean isConnected() {
         return inStream != null && outStream != null;
     }

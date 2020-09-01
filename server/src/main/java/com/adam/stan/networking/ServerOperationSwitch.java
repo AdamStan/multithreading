@@ -1,12 +1,12 @@
 package com.adam.stan.networking;
 
-import java.util.List;
 import java.util.Optional;
 
 import com.adam.stan.UsersList;
-import com.adam.stan.files.Resource;
+import com.adam.stan.files.FileInfo;
 import com.adam.stan.messages.ClientServerMessage;
 import com.adam.stan.messages.InfoMessage;
+import com.adam.stan.storage.UserRootDirectory;
 
 public class ServerOperationSwitch {
 
@@ -25,7 +25,6 @@ public class ServerOperationSwitch {
         }
     }
 
-
     private static ClientServerMessage makeInfo(ClientServerMessage clientMessage) {
         return new InfoMessage(clientMessage.getUser(), "This is an answer from server");
     }
@@ -41,15 +40,14 @@ public class ServerOperationSwitch {
         return null;
     }
 
-    @SuppressWarnings("unchecked")
     private static ClientServerMessage makeRefreshFiles(ClientServerMessage clientMessage) {
         System.out.println(clientMessage.getValue().get());
-        Optional<?> listOfResources = clientMessage.getValue();
-        listOfResources.ifPresent(listOfAllResources -> {
-            List<Resource> list = (List<Resource>) listOfAllResources;
-            list.forEach(res -> {
-                System.out.println(res.toString());
-            });
+        Optional<?> fileResource = clientMessage.getValue();
+        UserRootDirectory rootUser = new UserRootDirectory(clientMessage.getUser().getName());
+        fileResource.ifPresent(resource -> {
+            FileInfo info = (FileInfo) resource;
+            System.out.println(info.toString());
+            rootUser.createServerFile(info);
         });
         return new InfoMessage(clientMessage.getUser(), "Files were updated");
     }

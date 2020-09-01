@@ -24,7 +24,7 @@ public class ResourceFactoryTests {
     void testFile() {
         ResourceFactory factory = new ResourceFactory("");
         Resource ourFile = factory.getResource(file);
-        assertTrue(ourFile instanceof File, "It is not a File class!");
+        assertTrue(ourFile instanceof MyFile, "It is not a File class!");
     }
 
     @Test

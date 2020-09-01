@@ -10,6 +10,7 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 class WorkerPoolTests {
+    private static final int MAIN_SLEEP = 10_000;
 
     @BeforeAll
     static void setMexWorkersNumber() throws Exception {
@@ -21,7 +22,7 @@ class WorkerPoolTests {
     @Test
     void testExecute_one_task() {
         WorkerPool pool = new WorkerPool();
-        Thread thread = new Thread(() -> task(10_000));
+        Thread thread = new Thread(() -> task(MAIN_SLEEP));
         pool.execute(thread);
         List<Informative> workers = pool.getWorkers();
         assertEquals(1, workers.size());
@@ -30,8 +31,8 @@ class WorkerPoolTests {
     @Test
     void testExecute_two_task() {
         WorkerPool pool = new WorkerPool();
-        Thread thread1 = new Thread(() -> task(10_000));
-        Thread thread2 = new Thread(() -> task(10_000));
+        Thread thread1 = new Thread(() -> task(MAIN_SLEEP));
+        Thread thread2 = new Thread(() -> task(MAIN_SLEEP));
         pool.execute(thread1);
         pool.execute(thread2);
         List<Informative> workers = pool.getWorkers();
@@ -42,8 +43,8 @@ class WorkerPoolTests {
     void testExecute_two_task_and_third_when_first_over() {
         WorkerPool pool = new WorkerPool();
         Thread thread1 = new Thread(() -> task(1_000));
-        Thread thread2 = new Thread(() -> task(10_000));
-        Thread thread3 = new Thread(() -> task(10_000));
+        Thread thread2 = new Thread(() -> task(MAIN_SLEEP));
+        Thread thread3 = new Thread(() -> task(MAIN_SLEEP));
         pool.execute(thread1);
         pool.execute(thread2);
         // waiting for task which is completed but worker is on sleep state.
@@ -56,12 +57,12 @@ class WorkerPoolTests {
     void testExecute_four_task_and_another_two_and_check_if_two_are_in_queue()
             throws Exception {
         WorkerPool pool = new WorkerPool();
-        Thread thread1 = new Thread(() -> task(10_000));
-        Thread thread2 = new Thread(() -> task(10_000));
-        Thread thread3 = new Thread(() -> task(10_000));
-        Thread thread4 = new Thread(() -> task(10_000));
-        Thread thread5 = new Thread(() -> task(10_000));
-        Thread thread6 = new Thread(() -> task(10_000));
+        Thread thread1 = new Thread(() -> task(MAIN_SLEEP));
+        Thread thread2 = new Thread(() -> task(MAIN_SLEEP));
+        Thread thread3 = new Thread(() -> task(MAIN_SLEEP));
+        Thread thread4 = new Thread(() -> task(MAIN_SLEEP));
+        Thread thread5 = new Thread(() -> task(MAIN_SLEEP));
+        Thread thread6 = new Thread(() -> task(MAIN_SLEEP));
         pool.execute(thread1);
         pool.execute(thread2);
         pool.execute(thread3);

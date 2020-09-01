@@ -29,6 +29,11 @@ public class FolderImpl extends ResourceImpl implements Folder {
     }
 
     @Override
+    public boolean isFile() {
+        return false;
+    }
+
+    @Override
     public String toString() {
         return "FolderImpl [file=" + file.getAbsolutePath() + "]";
     }

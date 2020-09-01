@@ -8,4 +8,6 @@ public interface Resource extends Serializable {
     String getName();
     List<Resource> getChildren();
     String relativePath();
+    byte[] getContent();
+    boolean isFile();
 }

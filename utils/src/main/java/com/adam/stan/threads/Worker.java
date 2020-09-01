@@ -7,7 +7,7 @@ import javafx.beans.value.ObservableValue;
 
 class Worker extends Thread implements Informative {
 
-    private static final int WAITING_FOR_NEW_TASK = 1_000;
+    private static final int WAITING_FOR_NEW_TASK = 5_000;
     private Runnable currentTask;
     private WorkerPool pool;
     private ThreadStatus status = ThreadStatus.CREATED;
