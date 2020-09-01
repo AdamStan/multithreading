@@ -31,7 +31,7 @@ public class RootLocalDirectory {
         return path;
     }
 
-    public synchronized List<Resource> listFiles() {
+    public synchronized List<Resource> listRootFiles() {
         children = new ArrayList<>();
         if (!root.exists()) {
             root.mkdir();
@@ -45,6 +45,19 @@ public class RootLocalDirectory {
         }
 
         return children;
+    }
+    
+    public synchronized List<Resource> listAllFiles() {
+        List<Resource> rootItems = listRootFiles();
+        List<Resource> otherChildren = new ArrayList<>();
+        rootItems.forEach(file -> {
+            otherChildren.addAll(file.getChildren());
+        });
+
+        List<Resource> allFiles = new ArrayList<>(rootItems.size() + otherChildren.size());
+        allFiles.addAll(rootItems);
+        allFiles.addAll(otherChildren);
+        return allFiles;
     }
 
     public List<Resource> getChildren() {

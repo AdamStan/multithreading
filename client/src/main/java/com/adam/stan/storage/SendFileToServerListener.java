@@ -17,7 +17,7 @@ public class SendFileToServerListener implements ChangeInRootListener {
 
     @Override
     public void directoryChanged(WatchEvent<?> key) {
-        List<Resource> children = root.listFiles();
+        List<Resource> children = root.listRootFiles();
         Connector.sendFiles(children);
     }
 

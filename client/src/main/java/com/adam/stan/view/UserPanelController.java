@@ -21,8 +21,7 @@ import javafx.scene.control.TreeView;
 
 public class UserPanelController implements ChangeInRootListener {
 
-    private static final Logger LOGGER = Logger
-            .getLogger(UserPanelController.class.getName());
+    private static final Logger LOGGER = Logger.getLogger(UserPanelController.class.getName());
     private RootLocalDirectory root;
 
     @FXML
@@ -43,16 +42,14 @@ public class UserPanelController implements ChangeInRootListener {
      * Run on JavaFX thread
      */
     private void refreshItems() {
-        List<Resource> children = root.listFiles();
+        List<Resource> children = root.listRootFiles();
         loadRootItems(children);
     }
 
-    public void loadRootItems(
-            List<com.adam.stan.files.Resource> resources) {
+    public void loadRootItems(List<com.adam.stan.files.Resource> resources) {
         LOGGER.log(Level.INFO, "Tree view: " + treeView);
         if (treeView != null) {
-            TreeItem<String> root = new TreeItem<String>("ROOT",
-                    IconProvider.INSTANCE.getFolderIcon());
+            TreeItem<String> root = new TreeItem<String>("ROOT", IconProvider.INSTANCE.getFolderIcon());
             resources.forEach(resource -> {
                 addChild(root, resource);
             });
@@ -61,10 +58,8 @@ public class UserPanelController implements ChangeInRootListener {
     }
 
     private void addChild(TreeItem<String> root, Resource child) {
-        TreeItem<String> childItem = new TreeItem<>(child.getName(),
-                IconForResource.getIcon(child));
-        child.getChildren()
-                .forEach(grandchild -> addChild(childItem, grandchild));
+        TreeItem<String> childItem = new TreeItem<>(child.getName(), IconForResource.getIcon(child));
+        child.getChildren().forEach(grandchild -> addChild(childItem, grandchild));
         root.getChildren().add(childItem);
     }
 
@@ -82,8 +77,8 @@ public class UserPanelController implements ChangeInRootListener {
     public void upload() {
         LOGGER.log(Level.INFO, "Upload files - just for testing - to remove");
         // force upload for all files
-        List<Resource> children = root.listFiles();
-        Connector.sendFiles(children);
+        List<Resource> allFiles = root.listAllFiles();
+        Connector.sendFiles(allFiles);
     }
 
     @FXML
