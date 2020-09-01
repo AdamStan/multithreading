@@ -10,12 +10,13 @@ class Worker extends Thread implements Informative {
     private static final int WAITING_FOR_NEW_TASK = 5_000;
     private Runnable currentTask;
     private WorkerPool pool;
-    private ThreadStatus status = ThreadStatus.CREATED;
+    private SimpleObjectProperty<ThreadStatus> status;
 
     public Worker(Runnable currentTask, WorkerPool pool, String name) {
         super(name);
         this.currentTask = currentTask;
         this.pool = pool;
+        status = new SimpleObjectProperty<ThreadStatus>(ThreadStatus.CREATED);
     }
 
     @Override
@@ -25,7 +26,7 @@ class Worker extends Thread implements Informative {
 
     @Override
     public ObservableValue<ThreadStatus> getPropertyStatus() {
-        return new SimpleObjectProperty<ThreadStatus>(status);
+        return status;
     }
 
     @Override
@@ -40,7 +41,7 @@ class Worker extends Thread implements Informative {
         // pobierz nastepnego taska z queue listy working poola
         // jesli juz wszystko z kolejki wykonane to usun sie z working poola
         while (currentTask != null) {
-            this.status = ThreadStatus.RUNNING;
+            this.status.set(ThreadStatus.RUNNING);
             currentTask.run();
             currentTask = pool.taskFromQueue();
             if (currentTask == null) {
@@ -48,13 +49,13 @@ class Worker extends Thread implements Informative {
             }
         }
 
-        this.status = ThreadStatus.END_OF_LIFE;
+        this.status.set(ThreadStatus.END_OF_LIFE);
         pool.endWorker(this);
     }
     
     private void waitingForNewTask() {
         try {
-            status = ThreadStatus.SLEEPING;
+            status.set(ThreadStatus.SLEEPING);
             Thread.sleep(WAITING_FOR_NEW_TASK);
         } catch (InterruptedException e) {
             e.printStackTrace();
@@ -63,7 +64,7 @@ class Worker extends Thread implements Informative {
 
     @Override
     public ThreadStatus getStatus() {
-        return status;
+        return status.get();
     }
 
     public void setNextTask(Runnable runnable) {
