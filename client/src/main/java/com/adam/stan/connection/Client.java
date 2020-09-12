@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
-import java.nio.file.Files;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -113,6 +112,10 @@ class Client {
         } catch (IOException e) {
             logger.log(Level.SEVERE, e.getMessage(), e);
         }
+    }
+
+    void downloadAllFiles() {
+        throw new UnsupportedOperationException("Download all files not implemented yet!");
     }
 
     boolean isConnected() {

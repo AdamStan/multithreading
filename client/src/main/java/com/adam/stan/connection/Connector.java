@@ -38,6 +38,13 @@ public class Connector {
         }
     }
 
+    public static void downloadAllFiles() {
+       synchronized (client) {
+            client.downloadAllFiles();
+        }
+    }
+
     private Connector() {
     }
+
 }

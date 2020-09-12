@@ -73,12 +73,20 @@ public class UserPanelController implements ChangeInRootListener {
         LOGGER.log(Level.INFO, "Browse...");
     }
 
+    /**
+     * force upload for all files
+     */
     @FXML
     public void upload() {
-        LOGGER.log(Level.INFO, "Upload files - just for testing - to remove");
-        // force upload for all files
+        LOGGER.log(Level.INFO, "Upload files.");
         List<Resource> allFiles = root.listAllFiles();
         Connector.sendFiles(allFiles);
+    }
+    
+    @FXML
+    public void downloadFiles() {
+        LOGGER.info("Download file from server.");
+        Connector.downloadAllFiles();
     }
 
     @FXML
