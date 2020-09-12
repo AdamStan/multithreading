@@ -2,6 +2,9 @@ package com.adam.stan.storage.files;
 
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.attribute.BasicFileAttributes;
 import java.util.Collections;
 import java.util.List;
 
@@ -42,6 +45,27 @@ public abstract class ResourceImpl implements Resource {
             // ignore!
         }
         return new byte[0];
+    }
+    
+    /**
+     * @return can return -1!
+     */
+    @Override
+    public long getLastModifiedDate() {
+        Path path = Paths.get(file.getAbsolutePath());
+        BasicFileAttributes attr;
+        long time = -1;
+        try {
+            attr = Files.readAttributes(path, BasicFileAttributes.class);
+            System.out.println("creationTime: " + attr.creationTime());
+            System.out.println("lastAccessTime: " + attr.lastAccessTime());
+            System.out.println("lastModifiedTime: " + attr.lastModifiedTime());
+            time = attr.lastModifiedTime().toMillis();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return time;
     }
 
 }

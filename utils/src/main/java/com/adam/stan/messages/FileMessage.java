@@ -13,7 +13,7 @@ public class FileMessage extends AbstractMessage {
 
     public FileMessage(User user, Resource resource, byte[] content) {
         super(user);
-        info = new FileInfo(resource.relativePath(), content, resource.isFile());
+        info = new FileInfo(resource.relativePath(), content, resource.isFile(), resource.getLastModifiedDate());
     }
 
     @Override

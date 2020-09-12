@@ -43,7 +43,7 @@ public class ServerOperationSwitch {
     private static ClientServerMessage makeRefreshFiles(ClientServerMessage clientMessage) {
         System.out.println(clientMessage.getValue().get());
         Optional<?> fileResource = clientMessage.getValue();
-        UserRootDirectory rootUser = new UserRootDirectory(clientMessage.getUser().getName());
+        UserRootDirectory rootUser = new UserRootDirectory(clientMessage.getUser());
         fileResource.ifPresent(resource -> {
             FileInfo info = (FileInfo) resource;
             System.out.println(info.toString());

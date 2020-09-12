@@ -10,4 +10,5 @@ public interface Resource extends Serializable {
     String relativePath();
     byte[] getContent();
     boolean isFile();
+    long getLastModifiedDate();
 }

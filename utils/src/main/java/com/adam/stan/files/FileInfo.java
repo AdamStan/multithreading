@@ -14,11 +14,13 @@ public class FileInfo implements Serializable {
     private String relativePath;
     private byte[] content;
     private boolean file;
+    private long modificationDate;
 
-    public FileInfo(String relativePath, byte[] content, boolean file) {
+    public FileInfo(String relativePath, byte[] content, boolean file, long modificationDate) {
         this.relativePath = relativePath;
         this.content = content;
         this.file = file;
+        this.modificationDate = modificationDate;
     }
 
     public String getRelativePath() {
@@ -43,6 +45,10 @@ public class FileInfo implements Serializable {
 
     public void setFile(boolean file) {
         this.file = file;
+    }
+
+    public long getModificationDate() {
+        return modificationDate;
     }
 
     @Override
