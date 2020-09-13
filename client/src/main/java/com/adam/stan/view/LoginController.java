@@ -1,5 +1,8 @@
 package com.adam.stan.view;
 
+import java.io.File;
+
+import com.adam.stan.ApplicationPrimaryStage;
 import com.adam.stan.connection.Connector;
 
 import javafx.application.Platform;
@@ -7,6 +10,8 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.stage.DirectoryChooser;
+import javafx.stage.Window;
 
 public class LoginController {
 
@@ -28,7 +33,7 @@ public class LoginController {
     }
 
     public void disableChange() {
-        changeLocation.setDisable(true);
+        // changeLocation.setDisable(true);
         pathToRootFile.setEditable(false);
     }
 
@@ -43,5 +48,16 @@ public class LoginController {
             PrimaryStageSceneChanger changer = new PrimaryStageSceneChanger();
             changer.showUserPanel(pathToRootFile.getText());
         });
+    }
+
+    @FXML
+    public void showDirectoryChooser() {
+        DirectoryChooser directoryChooser = new DirectoryChooser();
+        directoryChooser.setTitle("Open Resource File");
+        Window stage = ApplicationPrimaryStage.INSTANCE.getPrimaryStage();
+        File file = directoryChooser.showDialog(stage);
+        if (file != null) {
+            pathToRootFile.setText(file.getAbsolutePath());
+        }
     }
 }

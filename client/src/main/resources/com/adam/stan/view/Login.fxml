@@ -41,7 +41,7 @@
             <Insets />
          </opaqueInsets>
       </TextField>
-      <Button fx:id="changeLocation" mnemonicParsing="false" prefHeight="25.0" prefWidth="70.0" text="Change..." GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+      <Button fx:id="changeLocation" mnemonicParsing="false" onAction="#showDirectoryChooser" prefHeight="25.0" prefWidth="70.0" text="Change..." GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="1" GridPane.valignment="CENTER">
          <GridPane.margin>
             <Insets left="10.0" right="10.0" />
          </GridPane.margin>
