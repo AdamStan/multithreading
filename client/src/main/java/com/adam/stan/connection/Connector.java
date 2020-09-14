@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.adam.stan.files.Resource;
 import com.adam.stan.security.User;
+import com.adam.stan.storage.RootLocalDirectory;
 
 public class Connector {
 
@@ -38,9 +39,9 @@ public class Connector {
         }
     }
 
-    public static void downloadAllFiles() {
+    public static void downloadAllFiles(RootLocalDirectory root) {
        synchronized (client) {
-            client.downloadAllFiles();
+            client.downloadAllFiles(root);
         }
     }
 

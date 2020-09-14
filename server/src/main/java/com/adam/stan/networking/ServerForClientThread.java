@@ -34,6 +34,7 @@ public class ServerForClientThread extends Thread {
                 clientMessage = (ClientServerMessage) inStream.readObject();
                 Server.logger.log(Level.INFO, "From client: " + clientID + ", message is: " + clientMessage);
                 serverMessage = findCorrectAnswer(clientMessage);
+                Server.logger.log(Level.INFO, "To client: " + clientID + ", send: " + serverMessage);
                 outStream.writeObject(serverMessage);
                 outStream.flush();
             } while (clientMessageNotDisconnect(clientMessage));

@@ -57,8 +57,6 @@ public abstract class ResourceImpl implements Resource {
         long time = -1;
         try {
             attr = Files.readAttributes(path, BasicFileAttributes.class);
-            System.out.println("creationTime: " + attr.creationTime());
-            System.out.println("lastAccessTime: " + attr.lastAccessTime());
             System.out.println("lastModifiedTime: " + attr.lastModifiedTime());
             time = attr.lastModifiedTime().toMillis();
         } catch (IOException e) {

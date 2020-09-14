@@ -86,7 +86,7 @@ public class UserPanelController implements ChangeInRootListener {
     @FXML
     public void downloadFiles() {
         LOGGER.info("Download file from server.");
-        Connector.downloadAllFiles();
+        Connector.downloadAllFiles(root);
     }
 
     @FXML

@@ -5,17 +5,22 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.util.List;
+import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import com.adam.stan.files.FileInfo;
 import com.adam.stan.files.Resource;
 import com.adam.stan.messages.ClientServerMessage;
 import com.adam.stan.messages.Disconnect;
 import com.adam.stan.messages.FileMessage;
+import com.adam.stan.messages.FilesMessage;
 import com.adam.stan.messages.InfoMessage;
 import com.adam.stan.messages.LoginMessage;
+import com.adam.stan.messages.RequestAllFiles;
 import com.adam.stan.security.ApplicationParameters;
 import com.adam.stan.security.User;
+import com.adam.stan.storage.RootLocalDirectory;
 
 /**
  * Create and then use init to initialize fields, on exit use close
@@ -87,8 +92,6 @@ class Client {
             System.out.println(clientMessage);
             outStream.writeObject(clientMessage);
             outStream.flush();
-//            ClientServerMessage serverMessage = (ClientServerMessage) inStream.readObject();
-//            logger.info(serverMessage.toString());
         } catch (Exception e) {
             logger.log(Level.SEVERE, e.getMessage(), e);
         }
@@ -114,8 +117,21 @@ class Client {
         }
     }
 
-    void downloadAllFiles() {
-        throw new UnsupportedOperationException("Download all files not implemented yet!");
+    void downloadAllFiles(RootLocalDirectory root) {
+        try {
+            ClientServerMessage clientMessage = new RequestAllFiles(user);
+            System.out.println(clientMessage);
+            outStream.writeObject(clientMessage);
+            outStream.flush();
+            ClientServerMessage serverMessage = (ClientServerMessage) inStream.readObject();
+            logger.info(serverMessage.toString());
+            if (serverMessage instanceof FilesMessage) {
+                List<FileInfo> files = (List<FileInfo>) serverMessage.getValue().get();
+                files.forEach(file -> root.createLocalFile(file));
+            }
+        } catch (Exception e) {
+            logger.log(Level.SEVERE, e.getMessage(), e);
+        }
     }
 
     boolean isConnected() {

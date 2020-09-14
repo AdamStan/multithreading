@@ -1,12 +1,17 @@
 package com.adam.stan.storage;
 
 import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.logging.Logger;
 
 import com.adam.stan.ClientApplication;
+import com.adam.stan.files.FileInfo;
 import com.adam.stan.files.Resource;
 import com.adam.stan.storage.files.ResourceFactory;
 import com.adam.stan.storage.threads.ChangeInRootListener;
@@ -16,6 +21,7 @@ public class RootLocalDirectory {
 
     public static final String ourDirectoryName = "my-cloud";
     public static final String initPath = System.getProperty("user.home") + File.separatorChar + ourDirectoryName;
+    private static final Logger LOGGER = Logger.getLogger(RootLocalDirectory.class.getName());
 
     private final String path;
     private File root;
@@ -73,6 +79,39 @@ public class RootLocalDirectory {
     public void addFileChangedListener(ChangeInRootListener listener) {
         if (directoryWatcher != null) {
             directoryWatcher.addListener(listener);
+        }
+    }
+    
+    /**
+     * TODO: duplicate from UserLocalDirectory, pls fix
+     * @param file
+     */
+    public void createLocalFile(FileInfo file) {
+        String relativePath = file.getRelativePath();
+        String globalPathStart = root.getAbsolutePath();
+        File fileOrDirectory = new File(globalPathStart + relativePath);
+
+        if (file.isFile()) {
+            try {
+                if (!fileOrDirectory.exists()) {
+                    LOGGER.info("file: " + file.getRelativePath() + " not exists, will be created.");
+                    fileOrDirectory.createNewFile();
+                } else {
+                    //compare
+                    long time = fileOrDirectory.lastModified();
+                    if (time == file.getModificationDate()) {
+                        LOGGER.info("file: " + file.getRelativePath() + " exists and was not changed");
+                        return;
+                    }
+                }
+                Files.write(fileOrDirectory.toPath(), file.getContent(), StandardOpenOption.WRITE);
+                // set modification date
+                fileOrDirectory.setLastModified(file.getModificationDate());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        } else {
+            fileOrDirectory.mkdirs();
         }
     }
 }

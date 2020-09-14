@@ -1,11 +1,19 @@
 package com.adam.stan.networking;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 import java.util.Optional;
 
 import com.adam.stan.UsersList;
 import com.adam.stan.files.FileInfo;
 import com.adam.stan.messages.ClientServerMessage;
+import com.adam.stan.messages.FilesMessage;
 import com.adam.stan.messages.InfoMessage;
+import com.adam.stan.storage.ListAllFiles;
 import com.adam.stan.storage.UserRootDirectory;
 
 public class ServerOperationSwitch {
@@ -20,6 +28,8 @@ public class ServerOperationSwitch {
             return makeDisconnect(clientMessage);
         case FILE_REFRESH:
             return makeRefreshFiles(clientMessage);
+        case FILES_DOWNLOAD:
+            return prepareAllFiles(clientMessage);
         default:
             return null;
         }
@@ -51,4 +61,14 @@ public class ServerOperationSwitch {
         });
         return new InfoMessage(clientMessage.getUser(), "Files were updated");
     }
+
+    private static ClientServerMessage prepareAllFiles(ClientServerMessage clientMessage) {
+        UserRootDirectory rootUser = new UserRootDirectory(clientMessage.getUser());
+        String rootPath = rootUser.getRootFile().getAbsolutePath();
+        ListAllFiles lister = new ListAllFiles(rootPath);
+
+        List<FileInfo> fileInfos = lister.prepareAllFiles();
+        return new FilesMessage(clientMessage.getUser(), fileInfos);
+    }
+
 }

@@ -4,6 +4,8 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.StandardOpenOption;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Logger;
 
 import com.adam.stan.files.FileInfo;
@@ -56,6 +58,17 @@ public class UserRootDirectory {
 
     public User getUser() {
         return user;
+    }
+
+    public List<File> listFiles() {
+        List<File> rootFiles = new ArrayList<>();
+        File[] arrayOfFiles = userDirectory.listFiles();
+        if (arrayOfFiles != null) {
+            for (File file : arrayOfFiles) {
+                rootFiles.add(file);
+            }
+        }
+        return rootFiles;
     }
 
 }
