@@ -114,4 +114,11 @@ public class RootLocalDirectory {
             fileOrDirectory.mkdirs();
         }
     }
+
+    @Override
+    public String toString() {
+        return "RootLocalDirectory [root=" + root + "]";
+    }
+    
+    
 }

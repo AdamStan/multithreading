@@ -1,5 +1,7 @@
 package com.adam.stan.storage.files;
 
+import java.io.File;
+
 import com.adam.stan.files.Resource;
 
 public class ResourceFactory {
@@ -10,11 +12,11 @@ public class ResourceFactory {
         this.rootPath = path;
     }
 
-    public Resource getResource(java.io.File fileOrDir) {
-        if (fileOrDir.isDirectory()) {
-            return new FolderImpl(fileOrDir, rootPath);
+    public Resource getResource(File fileOrDir) {
+        if (fileOrDir.isFile()) {
+            return new FileImpl(fileOrDir, rootPath);
         }
-        return new FileImpl(fileOrDir, rootPath);
+        return new FolderImpl(fileOrDir, rootPath);
     }
 
 }

@@ -10,6 +10,9 @@ public class Connector {
 
     private static Client client;
 
+    private Connector() {
+    }
+
     public static void connect(String username) {
         User user = new User(username);
         client = new Client(user);
@@ -40,12 +43,20 @@ public class Connector {
     }
 
     public static void downloadAllFiles(RootLocalDirectory root) {
-       synchronized (client) {
+        synchronized (client) {
             client.downloadAllFiles(root);
         }
     }
 
-    private Connector() {
+    public static void sendFile(Resource resource) {
+        synchronized (client) {
+            client.sendFile(resource);
+        }
     }
 
+    public static void deletedFile(Resource resource) {
+        synchronized (client) {
+            client.sendDeletedFile(resource);
+        }
+    }
 }

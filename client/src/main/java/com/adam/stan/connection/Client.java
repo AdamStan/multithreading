@@ -5,13 +5,13 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.util.List;
-import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import com.adam.stan.files.FileInfo;
 import com.adam.stan.files.Resource;
 import com.adam.stan.messages.ClientServerMessage;
+import com.adam.stan.messages.DeleteFileMessage;
 import com.adam.stan.messages.Disconnect;
 import com.adam.stan.messages.FileMessage;
 import com.adam.stan.messages.FilesMessage;
@@ -152,6 +152,17 @@ class Client {
         client.sendInfo("This is client!");
         Thread.sleep(5_000);
         client.sendDisconnect();
+    }
+
+    public void sendDeletedFile(Resource resource) {
+        try {
+            ClientServerMessage clientMessage = new DeleteFileMessage(user, resource);
+            System.out.println(clientMessage);
+            outStream.writeObject(clientMessage);
+            outStream.flush();
+        } catch (Exception e) {
+            logger.log(Level.SEVERE, e.getMessage(), e);
+        }
     }
 
 }

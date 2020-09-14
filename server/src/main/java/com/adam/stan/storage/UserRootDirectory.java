@@ -19,7 +19,7 @@ public class UserRootDirectory {
 
     public UserRootDirectory(User user) {
         this.user = user;
-        userDirectory = new File(RootDirectory.NAME + File.separatorChar + user);
+        userDirectory = new File(RootDirectory.NAME + File.separatorChar + user.getName());
         userDirectory.mkdirs();
     }
 

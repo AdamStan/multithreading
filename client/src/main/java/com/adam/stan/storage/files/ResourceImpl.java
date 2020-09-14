@@ -5,6 +5,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.attribute.BasicFileAttributes;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -64,6 +65,16 @@ public abstract class ResourceImpl implements Resource {
         }
 
         return time;
+    }
+    
+    @Override
+    public List<Resource> listDescendants() {
+        List<Resource> descendants = new ArrayList<>();
+        descendants.addAll(getChildren());
+        for (Resource resource : getChildren()) {
+            descendants.addAll(resource.listDescendants());
+        }
+        return descendants;
     }
 
 }

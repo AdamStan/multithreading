@@ -3,8 +3,7 @@ package com.adam.stan.networking;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
-import java.util.ArrayList;
-import java.util.Collection;
+import java.nio.file.Path;
 import java.util.List;
 import java.util.Optional;
 
@@ -30,6 +29,8 @@ public class ServerOperationSwitch {
             return makeRefreshFiles(clientMessage);
         case FILES_DOWNLOAD:
             return prepareAllFiles(clientMessage);
+        case FILE_REMOVE:
+            return fileRemoved(clientMessage);
         default:
             return null;
         }
@@ -69,6 +70,25 @@ public class ServerOperationSwitch {
 
         List<FileInfo> fileInfos = lister.prepareAllFiles();
         return new FilesMessage(clientMessage.getUser(), fileInfos);
+    }
+
+    private static ClientServerMessage fileRemoved(ClientServerMessage clientMessage) {
+        Optional<?> optionalFile = clientMessage.getValue();
+        optionalFile.ifPresent(file -> {
+            FileInfo delFile = (FileInfo) file;
+            String relPath = delFile.getRelativePath();
+            UserRootDirectory root = new UserRootDirectory(clientMessage.getUser());
+            File fileToDelete = new File(root.getRootFile().getAbsolutePath() + File.separator + relPath);
+            System.out.println(fileToDelete);
+            try {
+                while (fileToDelete.exists()) {
+                    Files.walk(fileToDelete.toPath()).map(Path::toFile).forEachOrdered(File::delete);
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
+        return null;
     }
 
 }

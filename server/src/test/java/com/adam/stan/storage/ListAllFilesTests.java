@@ -49,12 +49,9 @@ public class ListAllFilesTests {
 
     @AfterAll
     static void removeSetUpFiles() throws IOException {
-        Files.walk(root.toPath()).map(Path::toFile).forEachOrdered(File::delete);
-
-        Files.deleteIfExists(folder3.toPath());
-        Files.deleteIfExists(folder1.toPath());
-        Files.deleteIfExists(folder2.toPath());
-        Files.deleteIfExists(root.toPath());
+        while(root.exists()) {
+            Files.walk(root.toPath()).map(Path::toFile).forEachOrdered(File::delete);
+        }
     }
 
     @Test
@@ -62,7 +59,6 @@ public class ListAllFilesTests {
         System.out.println(root.getAbsoluteFile());
         ListAllFiles lister = new ListAllFiles(root.getAbsolutePath());
         List<FileInfo> files = lister.prepareAllFiles();
-        System.out.println(files);
         assertEquals(6, files.size());
         for (int i = 0; i < files.size(); i++) {
             assertEquals(expectedRelativePaths.get(i), files.get(i).getRelativePath());

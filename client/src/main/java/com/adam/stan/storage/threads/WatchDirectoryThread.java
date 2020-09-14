@@ -47,10 +47,12 @@ public class WatchDirectoryThread extends Thread {
                             + watchEvent.context() + " Context type="
                             + ((Path) watchEvent.context()).getClass()
                                     .toString();
+                    Path dir = (Path)queuedKey.watchable();
+                    Path fullPath = dir.resolve((Path) watchEvent.context());
                     logger.info(message);
                     // inform listeners about changes
                     listeners.forEach(
-                            listener -> listener.directoryChanged(watchEvent));
+                            listener -> listener.directoryChanged(watchEvent, fullPath));
 
                     if (!queuedKey.reset()) {
                         break;

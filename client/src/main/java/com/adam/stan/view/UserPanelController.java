@@ -1,5 +1,6 @@
 package com.adam.stan.view;
 
+import java.nio.file.Path;
 import java.nio.file.WatchEvent;
 import java.util.List;
 import java.util.logging.Level;
@@ -46,7 +47,7 @@ public class UserPanelController implements ChangeInRootListener {
         loadRootItems(children);
     }
 
-    public void loadRootItems(List<com.adam.stan.files.Resource> resources) {
+    public void loadRootItems(List<Resource> resources) {
         LOGGER.log(Level.INFO, "Tree view: " + treeView);
         if (treeView != null) {
             TreeItem<String> root = new TreeItem<String>("ROOT", IconProvider.INSTANCE.getFolderIcon());
@@ -95,7 +96,7 @@ public class UserPanelController implements ChangeInRootListener {
     }
 
     @Override
-    public void directoryChanged(WatchEvent<?> key) {
+    public void directoryChanged(WatchEvent<?> key, Path fullPath) {
         Platform.runLater(() -> this.refreshItems());
     }
 }

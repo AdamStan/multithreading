@@ -11,4 +11,5 @@ public interface Resource extends Serializable {
     byte[] getContent();
     boolean isFile();
     long getLastModifiedDate();
+    List<Resource> listDescendants();
 }
