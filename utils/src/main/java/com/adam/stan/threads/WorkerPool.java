@@ -41,6 +41,7 @@ public class WorkerPool {
             Worker newWorker = new Worker(runnable, this,
                     "Worker-" + counter++);
             workers.add(newWorker);
+            // TODO: set description here
             newWorker.start();
         } else {
             queueTasks.add(runnable);

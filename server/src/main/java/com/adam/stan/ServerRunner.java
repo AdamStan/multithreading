@@ -25,8 +25,7 @@ public class ServerRunner extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
         FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(
-                ServerRunner.class.getResource("view/ServerStatusWindow.fxml"));
+        loader.setLocation(ServerRunner.class.getResource("view/ServerStatusWindow.fxml"));
         try {
             BorderPane rootLayout = (BorderPane) loader.load();
             ServerStatusWindowController controller = loader.getController();
@@ -36,6 +35,7 @@ public class ServerRunner extends Application {
             primaryStage.show();
             controller.setTableInformation(GLOBAL_WORKER_POOL.getWorkers());
             controller.setUsersTable(UsersList.INSTANCE.getUsers());
+            controller.startWatching();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -45,6 +45,8 @@ public class ServerRunner extends Application {
     public void stop() throws Exception {
         GLOBAL_SERVER.turnOff();
         GLOBAL_WORKER_POOL.interruptAll();
+        // interupt all threads doesn't work when we are starting wathching
+        System.exit(0);
     }
 
 }
