@@ -1,14 +1,14 @@
 package com.adam.stan;
 
-import java.io.IOException;
+import com.adam.stan.connection.Connector;
+import com.adam.stan.threads.WorkerPool;
+import com.adam.stan.view.PrimaryStageSceneChanger;
 
 import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
-import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
 public class ClientApplication extends Application {
+    public static final WorkerPool GLOBAL_WORKER_POOL = new WorkerPool();
 
     public static void main(String[] args) {
         launch(args);
@@ -16,19 +16,15 @@ public class ClientApplication extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(
-                ClientApplication.class.getResource("view/Login.fxml"));
-        try {
-            GridPane rootLayout = (GridPane) loader.load();
-            Scene scene = new Scene(rootLayout);
-            primaryStage.setScene(scene);
-            primaryStage.setTitle("My cloud");
-            primaryStage.show();
-            ApplicationPrimaryStage.INSTANCE.setPrimaryStage(primaryStage);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        ApplicationPrimaryStage.INSTANCE.setPrimaryStage(primaryStage);
+        PrimaryStageSceneChanger changer = new PrimaryStageSceneChanger();
+        changer.showLoginView();
+    }
+
+    @Override
+    public void stop() throws Exception {
+        Connector.disconnect();
+        GLOBAL_WORKER_POOL.interruptAll();
     }
 
 }

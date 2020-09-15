@@ -11,6 +11,7 @@
   <modules>
     <module>client</module>
     <module>server</module>
+    <module>utils</module>
   </modules>
 
   <properties>
@@ -54,6 +55,19 @@
       <artifactId>javafx-web</artifactId>
       <version>11.0.2</version>
       <scope>compile</scope>
+    </dependency>
+    <dependency>
+        <groupId>org.junit.jupiter</groupId>
+        <artifactId>junit-jupiter-engine</artifactId>
+        <version>5.5.2</version>
+    </dependency>
+    <!-- https://mvnrepository.com/artifact/org.mockito/mockito-all -->
+<!-- https://mvnrepository.com/artifact/org.mockito/mockito-core -->
+    <dependency>
+        <groupId>org.mockito</groupId>
+        <artifactId>mockito-core</artifactId>
+        <version>2.28.2</version>
+        <scope>test</scope>
     </dependency>
   </dependencies>
 </project>

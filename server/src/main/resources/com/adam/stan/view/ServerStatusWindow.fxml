@@ -4,23 +4,44 @@
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.ToolBar?>
+<?import javafx.scene.control.TreeView?>
 <?import javafx.scene.layout.BorderPane?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.adam.stan.view.ServerStatusWindowController">
-   <center>
-      <TableView fx:id="table" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
-        <columns>
-          <TableColumn fx:id="threadName" prefWidth="100.0" text="Thread's name" />
-          <TableColumn fx:id="threadStatus" prefWidth="100.0" text="Status" />
-            <TableColumn fx:id="threadDescription" maxWidth="1.7976931348623157E308" minWidth="-1.0" text="Description" />
-        </columns>
-      </TableView>
-   </center>
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.adam.stan.view.ServerStatusWindowController">
    <top>
       <ToolBar prefHeight="40.0" prefWidth="200.0" BorderPane.alignment="CENTER">
         <items>
           <Button mnemonicParsing="false" onAction="#showDetails" text="Show Details" />
+            <Button mnemonicParsing="false" onAction="#refreshThreads" text="Refresh - non threads" />
+            <Button mnemonicParsing="false" onAction="#refreshTreeItems" text="Refresh - tree view" />
         </items>
       </ToolBar>
    </top>
+   <left>
+      <TableView fx:id="tableOfJavaThreads" prefHeight="160.0" prefWidth="326.0" BorderPane.alignment="CENTER">
+        <columns>
+          <TableColumn fx:id="javaThreadNames" prefWidth="200.0" text="Non worker thread" />
+          <TableColumn fx:id="javaThreadStatus" minWidth="0.0" prefWidth="120.0" text="Status" />
+        </columns>
+      </TableView>
+   </left>
+   <center>
+      <TreeView fx:id="treeView" prefHeight="160.0" prefWidth="272.0" BorderPane.alignment="CENTER" />
+   </center>
+   <bottom>
+      <TableView fx:id="tableOfThreads" prefHeight="272.0" prefWidth="800.0" BorderPane.alignment="CENTER">
+        <columns>
+          <TableColumn fx:id="threadName" prefWidth="150.0" text="Thread's name" />
+          <TableColumn fx:id="threadStatus" prefWidth="120.0" text="Status" />
+            <TableColumn fx:id="threadDescription" maxWidth="1.7976931348623157E308" minWidth="-1.0" prefWidth="300.0" text="Description" />
+        </columns>
+      </TableView>
+   </bottom>
+   <right>
+      <TableView fx:id="tableOfUsers" prefHeight="160.0" prefWidth="205.0" BorderPane.alignment="CENTER">
+        <columns>
+          <TableColumn fx:id="usernameColumn" prefWidth="200.0" text="Users" />
+        </columns>
+      </TableView>
+   </right>
 </BorderPane>

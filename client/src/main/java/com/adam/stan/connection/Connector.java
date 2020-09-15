@@ -1,41 +1,62 @@
 package com.adam.stan.connection;
 
-import java.util.ArrayList;
 import java.util.List;
 
-import com.adam.stan.connection.files.Folder;
-import com.adam.stan.connection.files.MockFile;
-import com.adam.stan.connection.files.MockFolder;
-import com.adam.stan.connection.files.Resource;
+import com.adam.stan.files.Resource;
+import com.adam.stan.security.User;
+import com.adam.stan.storage.RootLocalDirectory;
 
 public class Connector {
 
-    private final String url;
-    private static final List<Resource> resources = new ArrayList<>();
-    
-    static {
-        resources.add(new MockFile("file1.txt", 10_000));
-        resources.add(new MockFile("file2.xml", 10_000));
-        resources.add(new MockFile("file3.py", 10_000));
-        Folder folder = new MockFolder("folder");
-        folder.addChildren(new MockFile("file_in_folder1.txt", 2_000));
-        folder.addChildren(new MockFile("file_in_folder2.txt", 2_000));
-        resources.add(folder);
+    private static Client client;
+
+    private Connector() {
     }
 
-    public Connector(String address) {
-        url = address;
-    }
-
-    public void connect() throws ConnectException {
-        try {
-            // TODO: make connection
-        } catch (Exception e) {
-            throw new ConnectException(e);
+    public static void connect(String username) {
+        User user = new User(username);
+        client = new Client(user);
+        synchronized (client) {
+            client.init();
+            client.sendInitialMessage();
         }
     }
 
-    public List<Resource> getUserRootItems() {
-        return resources;
+    public static void disconnect() {
+        if (client != null && client.isConnected()) {
+            synchronized (client) {
+                client.sendDisconnect();
+            }
+        }
+    }
+
+    public static void sendInfo(String message) {
+        synchronized (client) {
+            client.sendInfo(message);
+        }
+    }
+
+    public static void sendFiles(List<Resource> resources) {
+        synchronized (client) {
+            client.sendFiles(resources);
+        }
+    }
+
+    public static void downloadAllFiles(RootLocalDirectory root) {
+        synchronized (client) {
+            client.downloadAllFiles(root);
+        }
+    }
+
+    public static void sendFile(Resource resource) {
+        synchronized (client) {
+            client.sendFile(resource);
+        }
+    }
+
+    public static void deletedFile(Resource resource) {
+        synchronized (client) {
+            client.sendDeletedFile(resource);
+        }
     }
 }
