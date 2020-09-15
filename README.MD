@@ -14,4 +14,5 @@ for this you also have to configure run configuration adding:
 --module-path "C:\Program Files\Java\javafx-sdk-11.0.2\lib" --add-modules javafx.controls,javafx.fxml 
 ```
 to VM arguments.
+
 4. have fun
