@@ -7,16 +7,18 @@ import javafx.beans.value.ObservableValue;
 
 class Worker extends Thread implements Informative {
 
-    private static final int WAITING_FOR_NEW_TASK = 5_000;
+    private static final int WAITING_FOR_NEW_TASK_TIME = 5_000;
     private Runnable currentTask;
     private WorkerPool pool;
     private SimpleObjectProperty<ThreadStatus> status;
+    private SimpleStringProperty description = new SimpleStringProperty();
 
     public Worker(Runnable currentTask, WorkerPool pool, String name) {
         super(name);
         this.currentTask = currentTask;
         this.pool = pool;
         status = new SimpleObjectProperty<ThreadStatus>(ThreadStatus.CREATED);
+        description.set(currentTask.toString());
     }
 
     @Override
@@ -31,7 +33,7 @@ class Worker extends Thread implements Informative {
 
     @Override
     public StringProperty getPropertyDescription() {
-        return new SimpleStringProperty("description should be here");
+        return description;
     }
 
     @Override
@@ -56,7 +58,7 @@ class Worker extends Thread implements Informative {
     private void waitingForNewTask() {
         try {
             status.set(ThreadStatus.SLEEPING);
-            Thread.sleep(WAITING_FOR_NEW_TASK);
+            Thread.sleep(WAITING_FOR_NEW_TASK_TIME);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -69,6 +71,10 @@ class Worker extends Thread implements Informative {
 
     public void setNextTask(Runnable runnable) {
         currentTask = runnable;
+    }
+    
+    public void setDescription(String desc) {
+        description.set(desc);
     }
 
 }

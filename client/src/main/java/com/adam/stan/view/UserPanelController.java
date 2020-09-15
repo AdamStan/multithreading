@@ -67,11 +67,9 @@ public class UserPanelController implements ChangeInRootListener {
     @FXML
     public void disconnect() {
         LOGGER.log(Level.INFO, "Disconnect");
-    }
-
-    @FXML
-    public void browse() {
-        LOGGER.log(Level.INFO, "Browse...");
+        Connector.disconnect();
+        PrimaryStageSceneChanger changer = new PrimaryStageSceneChanger();
+        changer.showLoginView();
     }
 
     /**
@@ -83,16 +81,11 @@ public class UserPanelController implements ChangeInRootListener {
         List<Resource> allFiles = root.listAllFiles();
         Connector.sendFiles(allFiles);
     }
-    
+
     @FXML
     public void downloadFiles() {
         LOGGER.info("Download file from server.");
         Connector.downloadAllFiles(root);
-    }
-
-    @FXML
-    public void settings() {
-        LOGGER.log(Level.INFO, "settings");
     }
 
     @Override

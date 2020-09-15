@@ -4,6 +4,7 @@ import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
 
 import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 
 public class WorkerPool {
@@ -41,7 +42,6 @@ public class WorkerPool {
             Worker newWorker = new Worker(runnable, this,
                     "Worker-" + counter++);
             workers.add(newWorker);
-            // TODO: set description here
             newWorker.start();
         } else {
             queueTasks.add(runnable);
@@ -66,6 +66,10 @@ public class WorkerPool {
             this.endWorker(work);
             ((Worker) work).interrupt();
         });
+    }
+    
+    public void addWorkersListener(ListChangeListener<? super Informative> listener) {
+        workers.addListener(listener);
     }
 
 }

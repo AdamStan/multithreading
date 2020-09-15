@@ -6,6 +6,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
 import java.util.Optional;
+import java.util.logging.Logger;
 
 import com.adam.stan.UsersList;
 import com.adam.stan.files.FileInfo;
@@ -15,7 +16,15 @@ import com.adam.stan.messages.InfoMessage;
 import com.adam.stan.storage.ListAllFiles;
 import com.adam.stan.storage.UserRootDirectory;
 
+/**
+ * Refactor for this class is needed
+ * 
+ * @author Adam
+ *
+ */
 public class ServerOperationSwitch {
+
+    private static final Logger LOG = Logger.getLogger(ServerOperationSwitch.class.getName());
 
     public static ClientServerMessage execute(ClientServerMessage clientMessage) {
         switch (clientMessage.getOperationType()) {
@@ -52,12 +61,12 @@ public class ServerOperationSwitch {
     }
 
     private static ClientServerMessage makeRefreshFiles(ClientServerMessage clientMessage) {
-        System.out.println(clientMessage.getValue().get());
+        LOG.info(clientMessage.getValue().get().toString());
         Optional<?> fileResource = clientMessage.getValue();
         UserRootDirectory rootUser = new UserRootDirectory(clientMessage.getUser());
         fileResource.ifPresent(resource -> {
             FileInfo info = (FileInfo) resource;
-            System.out.println(info.toString());
+            LOG.info(info.toString());
             rootUser.createServerFile(info);
         });
         return new InfoMessage(clientMessage.getUser(), "Files were updated");
@@ -79,7 +88,7 @@ public class ServerOperationSwitch {
             String relPath = delFile.getRelativePath();
             UserRootDirectory root = new UserRootDirectory(clientMessage.getUser());
             File fileToDelete = new File(root.getRootFile().getAbsolutePath() + File.separator + relPath);
-            System.out.println(fileToDelete);
+            LOG.info("File to delete: " + fileToDelete.toString());
             try {
                 while (fileToDelete.exists()) {
                     Files.walk(fileToDelete.toPath()).map(Path::toFile).forEachOrdered(File::delete);

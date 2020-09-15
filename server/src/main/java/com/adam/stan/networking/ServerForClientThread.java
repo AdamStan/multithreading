@@ -59,4 +59,11 @@ public class ServerForClientThread extends Thread {
         return ServerOperationSwitch.execute(clientMessage);
     }
 
+    @Override
+    public String toString() {
+        return "ServerForClientThread [clientID=" + clientID + "]";
+    }
+    
+    
+
 }
