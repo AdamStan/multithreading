@@ -1,5 +1,5 @@
 # How to start?
-At the beginning you have to have installed java 11 or higher and downloaded javaFX libraries from:
+At the beginning you have to have installed java 11 or higher and downloaded javaFX libraries from: https://gluonhq.com/products/javafx/
 
 In your favorite IDE:
 1. Import as maven project.
